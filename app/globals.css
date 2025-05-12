@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --text: oklch(1 0 0);
+    --accent: oklch(0 0 0);
+  }
+
+  * {
+    @apply select-none touch-manipulation transition-all;
+  }
+
+  body {
+    @apply h-screen;
+    @apply bg-cover bg-center bg-no-repeat bg-black;
+    @apply font-sans text-[var(--text)];
+  }
+}
+
+/* bg-[url(/images/bg.jpg)] */

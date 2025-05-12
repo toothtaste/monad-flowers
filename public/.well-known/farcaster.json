@@ -1,0 +1,19 @@
+{
+	"frame": {
+		"version": "1",
+		"name": "name",
+		"iconUrl": "https://example.fun/images/logo.png",
+		"homeUrl": "https://example.fun",
+		"splashImageUrl": "https://example.fun/images/logo.png",
+		"splashBackgroundColor": "#000",
+		"subtitle": "subtitle",
+		"description": "description",
+		"primaryCategory": "games",
+		"tags": ["words", "game", "story", "fun", "joke"],
+		"tagline": "tagline",
+		"ogTitle": "ogTitle",
+		"ogDescription": "ogDescription",
+		"ogImageUrl": "https://example.fun/images/ogimage.png",
+		"webhookUrl": "https://example.fun/api/webhook"
+	}
+}
