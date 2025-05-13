@@ -16,10 +16,15 @@
   }
 
   h1 {
+    @apply pointer-events-none;
     @apply text-shadow-[-1px_-1px_0_var(--accent),_0px_-1px_0_var(--accent),_1px_-1px_0_var(--accent),_-1px_0px_0_var(--accent),_1px_0px_0_var(--accent),_-1px_1px_0_var(--accent),_0px_1px_0_var(--accent),_1px_1px_0_var(--accent)];
   }
 
   img {
-    @apply object-contain;
+    @apply object-contain pointer-events-none;
+  }
+
+  button {
+    @apply cursor-pointer;
   }
 }

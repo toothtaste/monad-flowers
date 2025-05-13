@@ -1,6 +1,11 @@
+import { updateStore } from "@/lib/store"
+
 const Button = () => {
   return (
     <button
+      onClick={() => {
+        updateStore(prev => ({ step: prev.step + 1 }))
+      }}
       className="fixed bottom-12 left-13 right-13
                  pt-2 pb-2.5
                text-white font-bold text-base

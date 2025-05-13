@@ -53,19 +53,20 @@ export default function Home() {
 
   return (
     <>
-      <div className="absolute inset-0 -z-10 backdrop-blur-[2px]" onDragStart={e => e.preventDefault()}></div>
-      <div className="fixed right-0 top-23 w-22.5 h-48 z-10 blur-[1px]">
-        <Image src={"/images/roses.png"} fill alt="roses" />
-      </div>
-      <div className="fixed left-0 top-70 w-28 h-57 z-10 blur-[1px]">
-        <Image src={"/images/violets.png"} fill alt="violets" />
-      </div>
-      <div className="fixed right-0 bottom-0 w-23 h-23 z-10 blur-[1px]">
-        <Image src={"/images/blue-flower.png"} fill alt="blue-flower" />
-      </div>
       <Header />
       <Main />
       <Button />
+
+      <div className="absolute inset-0 -z-10 backdrop-blur-[2px] pointer-events-none" onDragStart={e => e.preventDefault()}></div>
+      <div className="fixed -right-2 top-23 w-22.5 h-48 z-10 blur-[1px] pointer-events-none">
+        <Image src={"/images/roses.png"} fill alt="roses" />
+      </div>
+      <div className="fixed left-0 top-70 w-28 h-57 z-10 blur-[1px] pointer-events-none">
+        <Image src={"/images/violets.png"} fill alt="violets" />
+      </div>
+      <div className="fixed right-0 bottom-0 w-23 h-23 z-10 blur-[1px] pointer-events-none">
+        <Image src={"/images/blue-flower.png"} fill alt="blue-flower" />
+      </div>
     </>
   )
 }
