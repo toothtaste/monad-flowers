@@ -1,13 +1,11 @@
-import { users } from "@/db"
 import { createAppClient, viemConnector } from "@farcaster/auth-client"
-import { randomUUID } from "crypto"
 import jwt from "jsonwebtoken"
 import { NextRequest, NextResponse } from "next/server"
 
-const { DOMAIN, JWT_SECRET } = process.env
+const { HOST, JWT_SECRET } = process.env
 
 export async function POST(req: NextRequest) {
-  if (!(DOMAIN && JWT_SECRET)) throw new Error("Credentials not defined")
+  if (!(HOST && JWT_SECRET)) throw new Error("Credentials not defined")
 
   try {
     const { message, signature, nonce } = await req.json()
@@ -21,15 +19,15 @@ export async function POST(req: NextRequest) {
       message,
       signature,
       nonce,
-      domain: DOMAIN,
+      domain: HOST,
     })
 
     if (!success) throw new Error("Unsuccessful verification")
 
-    const user = await users.findOne({ fid })
+    // const user = await users.findOne({ fid })
 
-    if (!user) await users.insertOne({ uuid: randomUUID(), fid, lastLogged: new Date(), createdAt: new Date() })
-    else await users.updateOne({ fid }, { $set: { lastLogged: new Date() } })
+    // if (!user) await users.insertOne({ uuid: randomUUID(), fid, lastLogged: new Date(), createdAt: new Date() })
+    // else await users.updateOne({ fid }, { $set: { lastLogged: new Date() } })
 
     const payload = {
       fid,

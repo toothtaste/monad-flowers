@@ -1,12 +1,20 @@
 import type { NextConfig } from "next"
 
-const { DOMAIN } = process.env
+const { HOST } = process.env
 
 const nextConfig: NextConfig = {
   /* config options here */
-  ...(DOMAIN && {
-    allowedDevOrigins: [DOMAIN],
+  ...(HOST && {
+    allowedDevOrigins: [HOST],
   }),
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "imagedelivery.net",
+      },
+    ],
+  },
 }
 
 export default nextConfig

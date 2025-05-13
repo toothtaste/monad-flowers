@@ -2,19 +2,24 @@
 
 @layer base {
   :root {
-    --text: oklch(1 0 0);
-    --accent: oklch(0 0 0);
+    --accent: oklch(0.48 0.1595 305.83);
   }
 
   * {
+    @apply font-(family-name:--karla) font-normal;
     @apply select-none touch-manipulation transition-all;
   }
 
   body {
     @apply h-screen;
-    @apply bg-cover bg-center bg-no-repeat bg-black;
-    @apply font-sans text-[var(--text)];
+    background: var(--accent) url(/images/bg.jpg) center/cover no-repeat;
+  }
+
+  h1 {
+    @apply text-shadow-[-1px_-1px_0_var(--accent),_0px_-1px_0_var(--accent),_1px_-1px_0_var(--accent),_-1px_0px_0_var(--accent),_1px_0px_0_var(--accent),_-1px_1px_0_var(--accent),_0px_1px_0_var(--accent),_1px_1px_0_var(--accent)];
+  }
+
+  img {
+    @apply object-contain;
   }
 }
-
-/* bg-[url(/images/bg.jpg)] */

@@ -1,4 +1,3 @@
-import { users } from "@/db"
 import { verifySession } from "@/lib/api/utils/verifySession"
 import console from "console"
 import { NextRequest, NextResponse } from "next/server"
@@ -12,7 +11,7 @@ export async function POST(req: NextRequest) {
 
     const { fid } = verifySession(session)
 
-    await users.updateOne({ fid }, { $set: { notificationToken: token } })
+    // await users.updateOne({ fid }, { $set: { notificationToken: token } })
 
     return NextResponse.json({ success: true })
   } catch (err) {
