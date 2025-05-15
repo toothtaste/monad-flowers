@@ -3,13 +3,13 @@
 import { farcasterFrame as miniAppConnector } from "@farcaster/frame-wagmi-connector"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { http } from "viem"
-import { base } from "viem/chains"
+import { monadTestnet } from "viem/chains"
 import { createConfig, WagmiProvider } from "wagmi"
 
 const wagmiConfig = createConfig({
-  chains: [base],
+  chains: [monadTestnet],
   transports: {
-    [base.id]: http(),
+    [monadTestnet.id]: http(),
   },
   connectors: [miniAppConnector()],
 })

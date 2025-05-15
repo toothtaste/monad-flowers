@@ -5,7 +5,7 @@ const { HOST } = process.env
 const nextConfig: NextConfig = {
   /* config options here */
   ...(HOST && {
-    allowedDevOrigins: [HOST],
+    allowedDevOrigins: [HOST, "hub.pinata.cloud"],
   }),
   images: {
     remotePatterns: [

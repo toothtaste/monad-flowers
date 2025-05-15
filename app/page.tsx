@@ -17,10 +17,6 @@ export default function Home() {
   const { mutateAsync: webhookMutateAsync } = useMutation({ mutationFn: webhook })
 
   async function prepare() {
-    // for development
-    return
-    //
-
     const { user, client } = await sdk.context
 
     updateStore({ user, client })

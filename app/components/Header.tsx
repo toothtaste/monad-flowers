@@ -26,7 +26,7 @@ const Header = () => {
 
       <div className="fixed right-5 top-8">
         <div className="relative z-10 w-[31px] h-[31px] bg-[var(--accent)] rounded-full outline-2 outline-[var(--accent)] cursor-pointer">
-          <Image src={user?.pfpUrl || "/images/header/profile.svg"} fill alt="profile" className="rounded-full" />
+          <Image src={user?.pfpUrl || "/images/user.svg"} fill alt="profile" className="rounded-full" />
         </div>
 
         <div className="absolute -left-0.5 bottom-1 w-12 h-12">
@@ -38,25 +38,3 @@ const Header = () => {
 }
 
 export default Header
-
-// import Image from "next/image"
-
-// const Header = () => {
-//   return (
-//     <header
-//       className="flex justify-between items-end
-//                  w-11/12
-//                  mx-auto"
-//     >
-//       <Image src={"/images/info.png"} width={32} height={32} alt="info" />
-//       <Image src={"/images/logo.png"} width={166.6} height={71.3} alt="logo" />
-//       <div
-//         className="w-8 h-8
-//                    bg-[var(--accent)]
-//                    rounded-full"
-//       ></div>
-//     </header>
-//   )
-// }
-
-// export default Header
