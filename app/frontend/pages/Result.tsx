@@ -3,20 +3,20 @@
 import { ABI, CA } from "@/lib/constants"
 import { store } from "@/lib/store"
 import Link from "next/link"
-import { useParams, useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { useNavigate, useParams } from "react-router"
 import { monadTestnet } from "viem/chains"
-import { useChainId, useReadContract, useWaitForTransactionReceipt } from "wagmi"
-import Button from "../../components/Button"
+import { useReadContract, useWaitForTransactionReceipt } from "wagmi"
+import Button from "../components/Button"
 
 const Result = () => {
-  const router = useRouter()
+  const navigate = useNavigate()
+
   const { hash } = useParams() as { hash: `0x${string}` | undefined }
 
   const { receiver } = store()
 
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ chainId: monadTestnet.id, hash })
-  const chainId = useChainId()
   const { data, isLoading, error } = useReadContract({
     address: CA,
     abi: ABI,
@@ -26,6 +26,10 @@ const Result = () => {
       enabled: !!receiver?.verified_addresses.primary.eth_address,
     },
   })
+
+  useEffect(() => {
+    console.log(hash)
+  }, [hash])
 
   useEffect(() => {
     console.log(error)
@@ -74,9 +78,9 @@ const Result = () => {
       </div>
 
       <Button
-        children={"home"}
+        text="home"
         onClick={() => {
-          router.push("/")
+          navigate("/")
         }}
       />
     </main>

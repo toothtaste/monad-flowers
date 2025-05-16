@@ -3,13 +3,13 @@
 import { store, updateStore } from "@/lib/store"
 import { Flower } from "@/lib/store/types"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router"
 import { monadTestnet } from "viem/chains"
 import { useSwitchChain } from "wagmi"
 import Button from "../components/Button"
 
 const Flowers = () => {
-  const router = useRouter()
+  const navigate = useNavigate()
 
   const { flower } = store()
 
@@ -26,7 +26,7 @@ const Flowers = () => {
                  border-3 border-[var(--accent)]"
       >
         <div className="relative w-36 h-45">
-          <Image src={`/images/flowers/${flower}.png`} sizes="144px" fill alt={flower} />
+          <Image src={`/images/flowers/${flower}.png`} sizes="144px" fill priority alt={flower} />
         </div>
 
         <div
@@ -58,10 +58,10 @@ const Flowers = () => {
       </div>
 
       <Button
-        children={"select"}
+        text="select"
         onClick={() => {
           switchChain({ chainId: monadTestnet.id })
-          router.push("/receiver")
+          navigate("/receiver")
         }}
       />
     </main>

@@ -1,12 +1,12 @@
-import { MouseEventHandler, ReactNode } from "react"
+import { MouseEventHandler } from "react"
 
 const Button = ({
   onClick,
-  children,
+  text,
   disabled,
 }: {
   onClick?: MouseEventHandler<HTMLButtonElement>
-  children?: ReactNode
+  text?: string
   disabled?: boolean
 }) => {
   return (
@@ -20,7 +20,7 @@ const Button = ({
                  bg-[var(--accent)]
                  ${disabled && "bg-[var(--inactive-accent)]"}`}
     >
-      {children}
+      {text}
     </button>
   )
 }

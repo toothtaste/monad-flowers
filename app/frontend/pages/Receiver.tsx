@@ -4,8 +4,8 @@ import { ABI, CA, IDS_MAP } from "@/lib/constants"
 import { store, updateStore } from "@/lib/store"
 import { UserData } from "@/lib/store/types"
 import { useQuery } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
 import { Suspense } from "react"
+import { useNavigate } from "react-router"
 import { monadTestnet } from "viem/chains"
 import { useAccount, useChainId, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
 import Button from "../components/Button"
@@ -13,7 +13,7 @@ import Button from "../components/Button"
 const Receiver = () => {
   const { user, receiver } = store()
 
-  const router = useRouter()
+  const navigate = useNavigate()
 
   const { data, isLoading, error } = useQuery<UserData[], Error>({
     queryKey: ["following", user?.fid],
@@ -92,7 +92,7 @@ const Receiver = () => {
       </div>
 
       <Button
-        children={((isPending || isConfirming) && "minting...") || (chainId !== monadTestnet.id && "change network") || "gift"}
+        text={((isPending || isConfirming) && "minting...") || (chainId !== monadTestnet.id && "change network") || "gift"}
         disabled={!receiver || isPending || isConfirming || chainId !== monadTestnet.id}
         onClick={async () => {
           if (!receiver) return
@@ -109,7 +109,7 @@ const Receiver = () => {
             chain: monadTestnet,
           })
 
-          router.push(`/result/${hash}`)
+          navigate(`/result/${hash}`)
         }}
       />
     </main>

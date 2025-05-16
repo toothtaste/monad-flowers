@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 import { Karla, Mogra } from "next/font/google"
 import Image from "next/image"
 import { ReactNode } from "react"
-import Header from "./components/Header"
+import Header from "./frontend/components/Header"
 import "./globals.css"
 
 const karla = Karla({
