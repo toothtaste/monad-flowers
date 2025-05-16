@@ -1,8 +1,10 @@
+"use client"
+
 import { ABI, CA, IDS_MAP } from "@/lib/constants"
 import { store, updateStore } from "@/lib/store"
 import { UserData } from "@/lib/store/types"
 import { useQuery } from "@tanstack/react-query"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { Suspense } from "react"
 import { monadTestnet } from "viem/chains"
 import { useAccount, useChainId, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
@@ -19,7 +21,7 @@ const Receiver = () => {
     enabled: !!user?.fid,
   })
 
-  const { data: hash, isPending, writeContract } = useWriteContract()
+  const { data: hash, isPending, writeContract, writeContractAsync } = useWriteContract()
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ chainId: monadTestnet.id, hash })
   const chainId = useChainId()
   const { switchChain } = useSwitchChain()
@@ -92,24 +94,22 @@ const Receiver = () => {
       <Button
         children={((isPending || isConfirming) && "minting...") || (chainId !== monadTestnet.id && "change network") || "gift"}
         disabled={!receiver || isPending || isConfirming || chainId !== monadTestnet.id}
-        onClick={() => {
+        onClick={async () => {
           if (!receiver) return
 
           const { flower } = store.getState()
 
           if (!(chainId === monadTestnet.id)) switchChain({ chainId: monadTestnet.id })
 
-          writeContract({
+          const hash = await writeContractAsync({
             address: CA,
             abi: ABI,
             functionName: "mint",
-            args: [address, BigInt(IDS_MAP[flower]), BigInt(1), "0x"],
+            args: [receiver.verified_addresses.primary.eth_address, BigInt(IDS_MAP[flower]), BigInt(1), "0x"],
             chain: monadTestnet,
           })
 
-          // receiver.verified_addresses.primary.eth_address
-
-          router.push("/result")
+          router.push(`/result/${hash}`)
         }}
       />
     </main>

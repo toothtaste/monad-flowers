@@ -1,20 +1,20 @@
+"use client"
+
 import { ABI, CA } from "@/lib/constants"
 import { store } from "@/lib/store"
 import Link from "next/link"
-import { useRouter } from "next/router"
+import { useParams, useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { monadTestnet } from "viem/chains"
-import { useAccount, useChainId, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
-import Button from "../components/Button"
+import { useChainId, useReadContract, useWaitForTransactionReceipt } from "wagmi"
+import Button from "../../components/Button"
 
 const Result = () => {
   const router = useRouter()
+  const { hash } = useParams() as { hash: `0x${string}` | undefined }
 
-  const { receiver, user } = store()
+  const { receiver } = store()
 
-  const { address } = useAccount()
-
-  const { data: hash, isPending, writeContract } = useWriteContract()
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ chainId: monadTestnet.id, hash })
   const chainId = useChainId()
   const { data, isLoading, error } = useReadContract({

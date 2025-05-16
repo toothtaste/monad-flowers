@@ -1,7 +1,9 @@
+"use client"
+
 import { store, updateStore } from "@/lib/store"
 import { Flower } from "@/lib/store/types"
 import Image from "next/image"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { monadTestnet } from "viem/chains"
 import { useSwitchChain } from "wagmi"
 import Button from "../components/Button"

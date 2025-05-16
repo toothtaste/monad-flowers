@@ -1,9 +1,10 @@
+import Farcaster from "@/lib/farcaster"
 import Providers from "@/lib/providers"
 import type { Metadata } from "next"
 import { Karla, Mogra } from "next/font/google"
 import Image from "next/image"
 import { ReactNode } from "react"
-import Header from "./frontend/components/Header"
+import Header from "./components/Header"
 import "./globals.css"
 
 const karla = Karla({
@@ -32,7 +33,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${karla.variable} ${mogra.variable} antialiased`}>
         <Header />
-        <Providers>{children}</Providers>
+        <Providers>
+          <Farcaster>{children}</Farcaster>
+        </Providers>
 
         <div className="fixed -right-2 top-23 w-22.5 h-48 z-10 blur-[1px] pointer-events-none">
           <Image src={"/images/roses.png"} sizes="90px" fill alt="roses" />

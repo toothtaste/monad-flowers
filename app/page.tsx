@@ -2,10 +2,10 @@
 
 import { updateStore } from "@/lib/store"
 import { Flower } from "@/lib/store/types"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { useAccount, useConnect } from "wagmi"
-import Button from "./frontend/components/Button"
+import Button from "./components/Button"
 
 export default function Home() {
   const router = useRouter()
