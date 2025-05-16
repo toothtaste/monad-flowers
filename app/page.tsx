@@ -1,68 +1,57 @@
 "use client"
 
-import { login } from "@/lib/api/login"
-import { webhook } from "@/lib/api/webhook"
 import { updateStore } from "@/lib/store"
-import { generateNonce } from "@farcaster/auth-client"
-import sdk from "@farcaster/frame-sdk"
-import { useMutation } from "@tanstack/react-query"
-import Image from "next/image"
+import { Flower } from "@/lib/store/types"
+import { useRouter } from "next/router"
 import { useEffect } from "react"
-import Button from "./components/Button"
-import Header from "./components/Header"
-import Main from "./components/Main"
+import { useAccount, useConnect } from "wagmi"
+import Button from "./frontend/components/Button"
 
 export default function Home() {
-  const { mutateAsync: loginMutateAsync } = useMutation({ mutationFn: login })
-  const { mutateAsync: webhookMutateAsync } = useMutation({ mutationFn: webhook })
+  const router = useRouter()
 
-  async function prepare() {
-    const { user, client } = await sdk.context
-
-    updateStore({ user, client })
-
-    const nonce = generateNonce()
-
-    await sdk.actions.ready({ disableNativeGestures: true })
-
-    try {
-      const { message, signature } = await sdk.actions.signIn({ nonce })
-      const { session } = await loginMutateAsync({ message, signature, nonce })
-
-      updateStore({ session })
-    } catch (error) {
-      await sdk.actions.close()
-    }
-  }
+  const { isConnected, address } = useAccount()
+  const { connect, connectors } = useConnect()
 
   useEffect(() => {
-    prepare()
-
-    sdk.on("frameAdded", async ({ notificationDetails }) => {
-      if (notificationDetails?.token) await webhookMutateAsync({ token: notificationDetails.token })
+    updateStore({
+      flower: Flower.Sunflower,
+      receiver: undefined,
     })
-
-    return () => {
-      sdk.removeAllListeners()
-    }
   }, [])
 
   return (
-    <>
-      <Header />
-      <Main />
-      <Button />
+    <main
+      className="fixed top-30 left-10 right-10
+                 text-black font-bold
+                   rounded-2xl
+                 bg-white
+                   tracking-widest
+                   border-3 border-[var(--accent)]"
+    >
+      <div
+        className="bg-[var(--accent)]
+                     text-lg text-white text-center
+                     pb-1.5
+                     rounded-t-lg"
+      >
+        guide
+      </div>
+      <div className="flex flex-col gap-3 px-3 pt-[9px] pb-3.5 text-sm leading-6">
+        <p>
+          Select a&nbsp;flower you&rsquo;d like to&nbsp;gift, choose a&nbsp;recipient, and pay for everything with test MON
+          tokens.
+        </p>
+        <p>The delivery is&nbsp;fast and cheap&nbsp;&mdash; I&nbsp;promise!</p>
+      </div>
 
-      <div className="absolute inset-0 -z-10 backdrop-blur-[2px] pointer-events-none" onDragStart={e => e.preventDefault()}></div>
-      <div className="fixed -right-2 top-23 w-22.5 h-48 z-10 blur-[1px] pointer-events-none">
-        <Image src={"/images/roses.png"} fill alt="roses" />
-      </div>
-      <div className="fixed left-0 top-70 w-28 h-57 z-10 blur-[1px] pointer-events-none">
-        <Image src={"/images/violets.png"} fill alt="violets" />
-      </div>
-      <div className="fixed right-0 bottom-0 w-23 h-23 z-10 blur-[1px] pointer-events-none">
-        <Image src={"/images/blue-flower.png"} fill alt="blue-flower" />
-      </div>
-    </>
+      <Button
+        children={!isConnected ? "connect" : "okay"}
+        onClick={() => {
+          if (!isConnected) connect({ connector: connectors[0] })
+          router.push("/flowers")
+        }}
+      />
+    </main>
   )
 }

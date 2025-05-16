@@ -1,12 +1,5 @@
 import { ClientContext, UserContext } from "@farcaster/frame-core/dist/context"
 
-export enum Step {
-  Guide,
-  Flower,
-  Receiver,
-  Result,
-}
-
 export enum Flower {
   Rose = "rose",
   Daisy = "daisy",
@@ -47,36 +40,8 @@ export type StoreData = {
   session?: string
   user?: UserContext
   client?: ClientContext
-  step: Step
   flower: Flower
   receiver?: UserData
-  mintAbi: {
-    inputs: [
-      {
-        internalType: "address"
-        name: "account"
-        type: "address"
-      },
-      {
-        internalType: "uint256"
-        name: "id"
-        type: "uint256"
-      },
-      {
-        internalType: "uint256"
-        name: "amount"
-        type: "uint256"
-      },
-      {
-        internalType: "bytes"
-        name: "data"
-        type: "bytes"
-      }
-    ]
-    name: "mint"
-    outputs: []
-    stateMutability: "nonpayable"
-    type: "function"
-  }
+
   updateStore: (newState: Partial<StoreData> | ((prev: StoreData) => Partial<StoreData>)) => void
 }

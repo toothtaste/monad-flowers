@@ -25,8 +25,6 @@ export async function GET(req: NextRequest) {
       following.push(...users)
     }
 
-    console.log(following)
-
     return NextResponse.json(following)
   } catch (err) {
     console.error(err)

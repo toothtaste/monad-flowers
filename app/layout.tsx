@@ -1,6 +1,9 @@
 import Providers from "@/lib/providers"
 import type { Metadata } from "next"
 import { Karla, Mogra } from "next/font/google"
+import Image from "next/image"
+import { ReactNode } from "react"
+import Header from "./frontend/components/Header"
 import "./globals.css"
 
 const karla = Karla({
@@ -23,12 +26,23 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: ReactNode
 }>) {
   return (
     <html lang="en">
       <body className={`${karla.variable} ${mogra.variable} antialiased`}>
+        <Header />
         <Providers>{children}</Providers>
+
+        <div className="fixed -right-2 top-23 w-22.5 h-48 z-10 blur-[1px] pointer-events-none">
+          <Image src={"/images/roses.png"} sizes="90px" fill alt="roses" />
+        </div>
+        <div className="fixed left-0 top-70 w-28 h-57 z-10 blur-[1px] pointer-events-none">
+          <Image src={"/images/violets.png"} sizes="112px" fill alt="violets" />
+        </div>
+        <div className="fixed right-0 bottom-0 w-23 h-23 z-10 blur-[1px] pointer-events-none">
+          <Image src={"/images/blue-flower.png"} sizes="92px" fill alt="blue-flower" />
+        </div>
       </body>
     </html>
   )

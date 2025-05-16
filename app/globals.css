@@ -4,7 +4,7 @@
   :root {
     --accent: oklch(0.48 0.1595 305.83);
     --dark-accent: oklch(0.4 0.1595 305.83);
-    --inactive-accent: oklch(0.3 0.1595 305.83);
+    --inactive-accent: oklch(0.4 0.13 305.83);
   }
 
   * {

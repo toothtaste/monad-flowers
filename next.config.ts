@@ -5,7 +5,7 @@ const { HOST } = process.env
 const nextConfig: NextConfig = {
   /* config options here */
   ...(HOST && {
-    allowedDevOrigins: [HOST, "hub.pinata.cloud"],
+    allowedDevOrigins: [HOST, "warpcast.com"],
   }),
   images: {
     remotePatterns: [
@@ -14,6 +14,16 @@ const nextConfig: NextConfig = {
         hostname: "imagedelivery.net",
       },
     ],
+  },
+
+  rewrites: async () => {
+    return [
+      {
+        // 👇 matches all routes except /api
+        source: "/((?!api/).*)",
+        destination: "/static-app-shell",
+      },
+    ]
   },
 }
 
