@@ -14,7 +14,6 @@
 
   body {
     @apply h-screen;
-    background: var(--accent) url(/images/bg.jpg) center/cover no-repeat;
   }
 
   h1 {

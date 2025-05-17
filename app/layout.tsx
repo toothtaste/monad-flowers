@@ -50,7 +50,12 @@ export default function RootLayout({
       <head>
         <meta name="fc:frame" content={JSON.stringify(frame)} />
       </head>
-      <body className={`${karla.variable} ${mogra.variable} antialiased`}>
+      <body
+        className={`${karla.variable} ${mogra.variable} antialiased`}
+        style={{
+          background: "oklch(0.48 0.1595 305.83) url(/images/bg.jpg) center/cover no-repeat",
+        }}
+      >
         <Providers>
           <Farcaster>{children}</Farcaster>
         </Providers>
