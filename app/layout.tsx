@@ -29,7 +29,7 @@ const frame = {
   version: "next",
   imageUrl: `https://${HOST}/manifest/heroImage.png`,
   button: {
-    title: "🌼",
+    title: "gift",
     action: {
       type: "launch_frame",
       url: `https://${HOST}`,

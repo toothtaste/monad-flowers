@@ -15,8 +15,6 @@ const Profile = () => {
     enabled: !!user?.fid,
   })
 
-  // domain, vercel, ask to test in the group
-
   return (
     <main>
       <div
