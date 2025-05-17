@@ -1,4 +1,9 @@
 {
+  "accountAssociation": {
+    "header": "eyJmaWQiOjEwMjEyMTQsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwZjI2NWYxNUMzQUEyNmFDZkQ1QTZkNDBlQzBBMjBmNTE2NTZDYWQ1In0",
+    "payload": "eyJkb21haW4iOiJtb25hZC1mbG93ZXJzLnh5eiJ9",
+    "signature": "MHhhMGUyYmI0YzY4NzI5MWJjYTVmMzJmMTZjZTA3OTRmYTlmZTVhMDU1M2IyOGE3YWYyNTFhODQ4YmY0MDM5NzNlMzAzOTVlYjU0OTYyZDE1Mjg3NjM3Njc0Y2I5MTA1MGY4ZGM5OGIwMmVmZDU1YjkwOWQxNTY3OTUyNWYxNGE3MDFi"
+  },
   "frame": {
     "version": "1",
     "name": "Monad Flowers",
