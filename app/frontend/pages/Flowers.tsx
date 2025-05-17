@@ -1,19 +1,24 @@
 "use client"
 
+import { EMOJIES_MAP } from "@/lib/constants"
 import { store, updateStore } from "@/lib/store"
-import { Flower } from "@/lib/store/types"
 import Image from "next/image"
-import { useNavigate } from "react-router"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 import { monadTestnet } from "viem/chains"
 import { useSwitchChain } from "wagmi"
 import Button from "../components/Button"
 
 const Flowers = () => {
-  const navigate = useNavigate()
-
   const { flower } = store()
 
   const { switchChain } = useSwitchChain()
+
+  const navigate = useRouter()
+
+  useEffect(() => {
+    navigate.prefetch("/receiver")
+  }, [])
 
   return (
     <main>
@@ -35,33 +40,27 @@ const Flowers = () => {
 
             if (!clicked) return
 
-            const emojies: Record<string, Flower> = {
-              "🌹": Flower.Rose,
-              "🌼": Flower.Daisy,
-              "🌺": Flower.Lily,
-              "🌻": Flower.Sunflower,
-              "🌷": Flower.Tulip,
-            }
+            if (!EMOJIES_MAP[clicked]) return
 
-            if (!emojies[clicked]) return
-
-            updateStore({ flower: emojies[clicked] })
+            updateStore({ flower: EMOJIES_MAP[clicked] })
           }}
           className="absolute bottom-2
                    flex gap-2
                    text-lg tracking-widest"
         >
-          <div className="cursor-pointer">🌹</div> <div className="cursor-pointer">🌼</div>{" "}
-          <div className="cursor-pointer">🌺</div>
-          <div className="cursor-pointer">🌻</div> <div className="cursor-pointer">🌷</div>
+          {["🌹", "🌼", "🌺", "🌻", "🌷"].map((em, i) => (
+            <div key={i} className="cursor-pointer">
+              {em}
+            </div>
+          ))}
         </div>
       </div>
 
       <Button
         text="select"
+        to="/receiver"
         onClick={() => {
           switchChain({ chainId: monadTestnet.id })
-          navigate("/receiver")
         }}
       />
     </main>

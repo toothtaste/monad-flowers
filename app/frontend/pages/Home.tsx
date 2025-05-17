@@ -2,15 +2,11 @@
 
 import { updateStore } from "@/lib/store"
 import { Flower } from "@/lib/store/types"
-import Image from "next/image"
 import { useEffect } from "react"
-import { useNavigate } from "react-router"
 import { useAccount, useConnect } from "wagmi"
 import Button from "../components/Button"
 
 export default function Home() {
-  const navigate = useNavigate()
-
   const { isConnected, address } = useAccount()
   const { connect, connectors } = useConnect()
 
@@ -19,8 +15,6 @@ export default function Home() {
       flower: Flower.Sunflower,
       receiver: undefined,
     })
-
-    const flowers = ["rose", "daisy", "lily", "sunflower", "tulip"]
   }, [])
 
   return (
@@ -48,15 +42,11 @@ export default function Home() {
         <p>The delivery is&nbsp;fast and cheap&nbsp;&mdash; I&nbsp;promise!</p>
       </div>
 
-      {["rose", "daisy", "lily", "sunflower", "tulip"].map(f => (
-        <Image key={f} src={`/images/flowers/${f}.png`} sizes="144px" fill priority alt={f} className="hidden" />
-      ))}
-
       <Button
+        to="/flowers"
         text="okay"
         onClick={() => {
           if (!isConnected) connect({ connector: connectors[0] })
-          navigate("/flowers")
         }}
       />
     </main>

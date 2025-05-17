@@ -1,6 +1,8 @@
 import { createAppClient, viemConnector } from "@farcaster/auth-client"
+import { randomUUID } from "crypto"
 import jwt from "jsonwebtoken"
 import { NextRequest, NextResponse } from "next/server"
+import { users } from "../../../db"
 
 const { HOST, JWT_SECRET } = process.env
 
@@ -24,10 +26,10 @@ export async function POST(req: NextRequest) {
 
     if (!success) throw new Error("Unsuccessful verification")
 
-    // const user = await users.findOne({ fid })
+    const user = await users.findOne({ fid })
 
-    // if (!user) await users.insertOne({ uuid: randomUUID(), fid, lastLogged: new Date(), createdAt: new Date() })
-    // else await users.updateOne({ fid }, { $set: { lastLogged: new Date() } })
+    if (!user) await users.insertOne({ uuid: randomUUID(), fid, lastLogged: new Date(), createdAt: new Date() })
+    else await users.updateOne({ fid }, { $set: { lastLogged: new Date() } })
 
     const payload = {
       fid,

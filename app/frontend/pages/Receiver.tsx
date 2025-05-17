@@ -3,7 +3,8 @@
 import { ABI, CA, IDS_MAP } from "@/lib/constants"
 import { store, updateStore } from "@/lib/store"
 import { UserData } from "@/lib/store/types"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import axios from "axios"
 import { Suspense } from "react"
 import { useNavigate } from "react-router"
 import { monadTestnet } from "viem/chains"
@@ -11,9 +12,7 @@ import { useAccount, useChainId, useSwitchChain, useWaitForTransactionReceipt, u
 import Button from "../components/Button"
 
 const Receiver = () => {
-  const { user, receiver } = store()
-
-  const navigate = useNavigate()
+  const { session, user, receiver, flower } = store()
 
   const { data, isLoading, error } = useQuery<UserData[], Error>({
     queryKey: ["following", user?.fid],
@@ -21,11 +20,23 @@ const Receiver = () => {
     enabled: !!user?.fid,
   })
 
+  const navigate = useNavigate()
+
   const { data: hash, isPending, writeContract, writeContractAsync } = useWriteContract()
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ chainId: monadTestnet.id, hash })
   const chainId = useChainId()
   const { switchChain } = useSwitchChain()
   const { isConnected, address } = useAccount()
+
+  const { mutateAsync: giftMutateAsync } = useMutation({
+    mutationFn: async (flowerName: "daisy" | "lily" | "rose" | "sunflower" | "tulip") =>
+      axios.post("/api/gifts", {
+        session,
+        receiverFid: user?.fid,
+        // receiver?.fid
+        flowerName,
+      }),
+  })
 
   return (
     <main>
@@ -108,6 +119,8 @@ const Receiver = () => {
             args: [receiver.verified_addresses.primary.eth_address, BigInt(IDS_MAP[flower]), BigInt(1), "0x"],
             chain: monadTestnet,
           })
+
+          await giftMutateAsync(flower)
 
           navigate(`/result/${hash}`)
         }}

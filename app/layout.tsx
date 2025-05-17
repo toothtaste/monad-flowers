@@ -4,7 +4,6 @@ import type { Metadata } from "next"
 import { Karla, Mogra } from "next/font/google"
 import Image from "next/image"
 import { ReactNode } from "react"
-import Header from "./frontend/components/Header"
 import "./globals.css"
 
 const karla = Karla({
@@ -32,7 +31,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${karla.variable} ${mogra.variable} antialiased`}>
-        <Header />
         <Providers>
           <Farcaster>{children}</Farcaster>
         </Providers>
@@ -46,6 +44,10 @@ export default function RootLayout({
         <div className="fixed right-0 bottom-0 w-23 h-23 z-10 blur-[1px] pointer-events-none">
           <Image src={"/images/blue-flower.png"} sizes="92px" fill alt="blue-flower" />
         </div>
+
+        {["rose", "daisy", "lily", "sunflower", "tulip"].map(f => (
+          <Image key={f} src={`/images/flowers/${f}.png`} sizes="144px" fill priority alt={f} className="hidden" />
+        ))}
       </body>
     </html>
   )

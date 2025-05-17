@@ -2,9 +2,12 @@
 
 import { store } from "@/lib/store"
 import Image from "next/image"
+import { useNavigate } from "react-router"
 
 const Header = () => {
   const { user } = store()
+
+  const navigate = useNavigate()
 
   return (
     <header>
@@ -26,7 +29,12 @@ const Header = () => {
         </h1>
       </div>
 
-      <div className="fixed right-5 top-8" onClick={() => {}}>
+      <div
+        className="fixed right-5 top-8"
+        onClick={() => {
+          navigate("/profile")
+        }}
+      >
         <div className="relative z-10 w-[31px] h-[31px] bg-[var(--accent)] rounded-full outline-2 outline-[var(--accent)] cursor-pointer">
           <Image src={user?.pfpUrl || "/images/user.svg"} sizes="31px" fill alt="profile" className="rounded-full" />
         </div>

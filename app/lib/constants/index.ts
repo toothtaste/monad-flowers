@@ -89,4 +89,12 @@ const IDS_MAP = {
   [Flower.Tulip]: 5,
 }
 
-export { ABI, CA, IDS_MAP }
+const EMOJIES_MAP: Record<string, Flower> = {
+  "🌹": Flower.Rose,
+  "🌼": Flower.Daisy,
+  "🌺": Flower.Lily,
+  "🌻": Flower.Sunflower,
+  "🌷": Flower.Tulip,
+}
+
+export { ABI, CA, EMOJIES_MAP, IDS_MAP }
