@@ -19,11 +19,14 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="fixed left-0 right-0 flex justify-center pointer-events-none">
-        <Image src={"/images/header/logo.svg"} sizes="166px" width={166} height={71} alt="logo" className="w-auto h-auto" />
+      <div className="fixed left-0 right-0 min-[390px]:-top-3 flex justify-center pointer-events-none">
+        <div className="relative w-41.5 h-18 min-[390px]:w-50 min-[390px]:h-22 min-[420px]:w-58">
+          <Image src={"/images/header/logo.svg"} sizes="166px" fill alt="logo" />
+        </div>
+
         <h1
-          className="absolute left-1/2 -translate-x-1/2 bottom-[5px] pb-0.5
-                     font-(family-name:--mogra) text-[19px] text-white"
+          className="absolute left-1/2 -translate-x-1/2 bottom-[5px] min-[390px]:bottom-2 pb-0.5
+                     font-(family-name:--mogra) text-white text-[19px] min-[390px]:text-[22px] min-[420px]:text-2xl"
         >
           monad&nbsp;flowers
         </h1>

@@ -22,7 +22,7 @@ const Button = ({
       disabled={disabled}
       className={`fixed bottom-12 left-13 right-13
                  pt-2 pb-2.5
-               text-white font-bold text-base
+               text-white font-bold text-base min-[390px]:text-lg
                  rounded-2xl
                  bg-[var(--accent)]
                  ${disabled && "bg-[var(--inactive-accent)]"}`}

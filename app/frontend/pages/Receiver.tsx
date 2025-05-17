@@ -32,8 +32,7 @@ const Receiver = () => {
     mutationFn: async (flowerName: "daisy" | "lily" | "rose" | "sunflower" | "tulip") =>
       axios.post("/api/gifts", {
         session,
-        receiverFid: user?.fid,
-        // receiver?.fid
+        receiverFid: receiver?.fid,
         flowerName,
       }),
   })
@@ -41,7 +40,7 @@ const Receiver = () => {
   return (
     <main>
       <div
-        className="fixed top-30 left-10 right-10
+        className="fixed top-30 min-[370px]:top-33 left-10 right-10
                text-black font-bold
                  rounded-3xl
                bg-[var(--accent)]
@@ -51,12 +50,12 @@ const Receiver = () => {
       >
         <div
           className="bg-[var(--accent)]
-                   text-lg text-white text-center
+                   text-lg min-[420px]:text-xl text-white text-center
                    pb-1.5"
         >
           users you follow
         </div>
-        <div className={`h-50 overflow-y-scroll `}>
+        <div className={`h-50 min-[390px]:h-65 overflow-y-scroll `}>
           {isLoading &&
             Array.from({ length: 7 }).map((_, i) => (
               <div key={i} className="flex items-center gap-3 px-3 pt-3 last:pb-3 bg-white overflow-hidden">

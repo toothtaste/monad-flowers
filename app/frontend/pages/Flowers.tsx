@@ -23,14 +23,14 @@ const Flowers = () => {
   return (
     <main>
       <div
-        className="fixed top-25 left-10 right-10
+        className="fixed top-25 min-[370px]:top-30 left-10 right-10
                  flex justify-center
-                 pt-9 pb-14
+                 pt-9 pb-14 min-[430px]:pb-20
                  rounded-2xl
                bg-white
                  border-3 border-[var(--accent)]"
       >
-        <div className="relative w-36 h-45">
+        <div className="relative w-36 h-45 ">
           <Image src={`/images/flowers/${flower}.png`} sizes="144px" fill priority alt={flower} />
         </div>
 
@@ -46,7 +46,7 @@ const Flowers = () => {
           }}
           className="absolute bottom-2
                    flex gap-2
-                   text-lg tracking-widest"
+                   text-lg min-[430px]:text-2xl tracking-widest"
         >
           {["🌹", "🌼", "🌺", "🌻", "🌷"].map((em, i) => (
             <div key={i} className="cursor-pointer">

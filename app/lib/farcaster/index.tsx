@@ -13,6 +13,10 @@ const Farcaster = ({ children }: { children: React.ReactNode }) => {
   const { mutateAsync: webhookMutateAsync } = useMutation({ mutationFn: webhook })
 
   async function prepare() {
+    const isMiniApp = await sdk.isInMiniApp()
+
+    if (!isMiniApp) return
+
     const { user, client } = await sdk.context
 
     updateStore({ user, client })

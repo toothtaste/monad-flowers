@@ -15,12 +15,12 @@ const Profile = () => {
     enabled: !!user?.fid,
   })
 
-  // add compose cast, check it all and fix, responsive, domain, vercel, ask to test in the group
+  // domain, vercel, ask to test in the group
 
   return (
     <main>
       <div
-        className="fixed top-30 left-10 right-10
+        className="fixed top-30 min-[390px]:top-32 left-10 right-10
                text-white font-bold
                  rounded-3xl
                bg-[var(--accent)]
@@ -30,12 +30,12 @@ const Profile = () => {
       >
         <div
           className="bg-[var(--accent)]
-                   text-lg text-center
+                   text-lg min-[420px]:text-xl text-center
                    pb-1.5"
         >
           received gifts
         </div>
-        <div className={`flex flex-wrap justify-between pr-2 pl-4.5 pt-4 h-77 overflow-y-scroll bg-white`}>
+        <div className={`flex flex-wrap justify-between px-2 min-[390px]:px-4 pt-4 h-77 overflow-y-scroll bg-white`}>
           {data?.receivedGifts.map((g, i) =>
             Object.entries(g.flowers)
               .filter(([_, count]) => count > 0)
@@ -44,8 +44,8 @@ const Profile = () => {
                   key={`${g.sender}-${flower}-${count}-${j}`}
                   className="
                         relative
-                        flex flex-col items-center justify-between basis-[46.5%]
-                       h-1/2 mb-4
+                        flex flex-col items-center justify-between basis-[47.5%]
+                       h-5/12 mb-2 min-[390px]:mb-4
                        rounded-2xl
                        border-2 border-[var(--accent)]
                        overflow-hidden"

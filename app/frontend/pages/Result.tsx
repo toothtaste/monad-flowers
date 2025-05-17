@@ -2,7 +2,6 @@
 
 import { store } from "@/lib/store"
 import sdk from "@farcaster/frame-sdk"
-import Link from "next/link"
 import { useParams } from "react-router"
 import Button from "../components/Button"
 
@@ -14,7 +13,7 @@ const Result = () => {
   return (
     <main>
       <div
-        className="fixed top-30 left-10 right-10
+        className="fixed top-30 min-[390px]:top-33 left-10 right-10
                  text-black font-bold
                    rounded-2xl
                  bg-white
@@ -23,30 +22,22 @@ const Result = () => {
       >
         <div
           className="bg-[var(--accent)]
-                     text-lg text-white text-center
+                     text-lg min-[420px]:text-xl text-white text-center
                      pb-1.5
                      rounded-t-lg"
         >
           result
         </div>
-        <div className="flex flex-col gap-5 px-3 pt-5 pb-4.5 text-sm text-center leading-6">
-          <p>{hash ? `@${receiver?.username} has received your gift!` : "confirming..."}</p>
-          <p>
-            tx&nbsp;hash:{" "}
-            {hash ? (
-              <Link href={`https://monad-testnet.socialscan.io/tx/${hash}`} className="underline">
-                {hash && `${hash.slice(0, 6)}...${hash.slice(-6)}`}
-              </Link>
-            ) : (
-              "..."
-            )}
-          </p>
+        <div className="flex flex-col gap-5 px-3 pt-5 pb-4.5 text-sm min-[420px]:text-base text-center leading-6">
+          <p>{`@${receiver?.username} has received your gift!`}</p>
 
           <button
             onClick={async () => {
               await sdk.actions.composeCast({
-                text: `Hey, ${receiver?.username}! A little flower gift is waiting for you — check it out: `,
-                embeds: [`https://${process.env.HOST}/profile`],
+                text: `Hey, @${
+                  receiver?.username
+                }! 🌼👋\n\nA little flower gift is waiting for you — check it out:\n${`https://${"HOST"}/profile`}`,
+                embeds: [],
               })
             }}
             className={`

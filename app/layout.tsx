@@ -38,7 +38,7 @@ export default function RootLayout({
         <div className="fixed -right-2 top-23 w-22.5 h-48 z-10 blur-[1px] pointer-events-none">
           <Image src={"/images/roses.png"} sizes="90px" fill alt="roses" />
         </div>
-        <div className="fixed left-0 top-70 w-28 h-57 z-10 blur-[1px] pointer-events-none">
+        <div className="fixed left-0 top-70 min-[370px]:top-77 w-28 h-57 z-10 blur-[1px] pointer-events-none">
           <Image src={"/images/violets.png"} sizes="112px" fill alt="violets" />
         </div>
         <div className="fixed right-0 bottom-0 w-23 h-23 z-10 blur-[1px] pointer-events-none">
