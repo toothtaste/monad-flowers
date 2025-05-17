@@ -30,7 +30,7 @@ const Flowers = () => {
                bg-white
                  border-3 border-[var(--accent)]"
       >
-        <div className="relative w-36 h-45 ">
+        <div className="relative w-36 h-45 min-[370px]:h-60">
           <Image src={`/images/flowers/${flower}.png`} sizes="144px" fill priority alt={flower} />
         </div>
 
