@@ -1,19 +1,25 @@
 {
-	"frame": {
-		"version": "1",
-		"name": "name",
-		"iconUrl": "https://example.fun/images/logo.png",
-		"homeUrl": "https://example.fun",
-		"splashImageUrl": "https://example.fun/images/logo.png",
-		"splashBackgroundColor": "#000",
-		"subtitle": "subtitle",
-		"description": "description",
-		"primaryCategory": "games",
-		"tags": ["words", "game", "story", "fun", "joke"],
-		"tagline": "tagline",
-		"ogTitle": "ogTitle",
-		"ogDescription": "ogDescription",
-		"ogImageUrl": "https://example.fun/images/ogimage.png",
-		"webhookUrl": "https://example.fun/api/webhook"
-	}
+  "frame": {
+    "version": "1",
+    "name": "Monad Flowers",
+    "homeUrl": "https://monad-flowers.xyz",
+    "iconUrl": "https://monad-flowers.xyz/manifest/icon.png",
+    "splashImageUrl": "https://monad-flowers.xyz/manifest/splashImage.png",
+    "splashBackgroundColor": "#ffffff",
+    "subtitle": "Gift flowers on Monad",
+    "description": "Gift flowers on Monad",
+    "screenshotUrls": [
+      "https://monad-flowers.xyz/manifest/screenshots/1.png",
+      "https://monad-flowers.xyz/manifest/screenshots/2.png",
+      "https://monad-flowers.xyz/manifest/screenshots/3.png"
+    ],
+    "primaryCategory": "entertainment",
+    "tags": ["flowers", "monad", "gift", "fun", "nft"],
+    "heroImageUrl": "https://monad-flowers.xyz/manifest/heroImage.png",
+    "tagline": "Gift flowers on Monad",
+    "ogTitle": "Gift flowers on Monad",
+    "ogDescription": "Gift flowers on Monad",
+    "ogImageUrl": "https://monad-flowers.xyz/manifest/heroImage.png",
+    "webhookUrl": "https://monad-flowers.xyz/api/webhook"
+  }
 }
