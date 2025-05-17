@@ -21,7 +21,7 @@ const Header = () => {
           <Image src={"/images/header/info.svg"} sizes="32px" width={32} height={32} alt="info" />
         </div>
 
-        <div className="absolute -left-[29px] -bottom-8 -z-10 w-18 h-20">
+        <div className="absolute -left-[29px] -bottom-9 -z-10 w-18 h-20">
           <Image src={"/images/header/dandelion.png"} sizes="72px" fill alt="dandelion" />
         </div>
       </div>
