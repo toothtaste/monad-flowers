@@ -23,7 +23,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={tanstackQueryClient}>{children}</QueryClientProvider>
       </WagmiProvider>
 
-      <div className="absolute inset-0 -z-10 backdrop-blur-[2px] pointer-events-none" onDragStart={e => e.preventDefault()}></div>
+      <div
+        // className="absolute inset-0 -z-10 backdrop-blur-[2px] pointer-events-none"
+        onDragStart={e => e.preventDefault()}
+      ></div>
     </>
   )
 }

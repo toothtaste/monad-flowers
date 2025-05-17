@@ -69,7 +69,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <Button text="home" to="/" />
+      <Button text="back" to="/" />
     </main>
   )
 }

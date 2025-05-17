@@ -12,17 +12,14 @@ const Header = () => {
   return (
     <header>
       <div className="fixed left-5 top-8">
-        <Image
-          src={"/images/header/info.svg"}
-          sizes="32px"
-          width={32}
-          height={32}
-          alt="info"
+        <div
           className="cursor-pointer"
           onClick={() => {
             navigate("/")
           }}
-        />
+        >
+          <Image src={"/images/header/info.svg"} sizes="32px" width={32} height={32} alt="info" />
+        </div>
 
         <div className="absolute -left-[29px] -bottom-8 -z-10 w-18 h-20">
           <Image src={"/images/header/dandelion.png"} sizes="72px" fill alt="dandelion" />
@@ -42,13 +39,13 @@ const Header = () => {
         </h1>
       </div>
 
-      <div
-        className="fixed right-5 top-8"
-        onClick={() => {
-          navigate("/profile")
-        }}
-      >
-        <div className="relative z-10 w-[31px] h-[31px] bg-[var(--accent)] rounded-full outline-2 outline-[var(--accent)] cursor-pointer">
+      <div className="fixed right-5 top-8">
+        <div
+          className="relative z-10 w-[31px] h-[31px] bg-[var(--accent)] rounded-full outline-2 outline-[var(--accent)] cursor-pointer"
+          onClick={() => {
+            navigate("/profile")
+          }}
+        >
           <Image src={user?.pfpUrl || "/images/user.svg"} sizes="31px" fill alt="profile" className="rounded-full" />
         </div>
 
