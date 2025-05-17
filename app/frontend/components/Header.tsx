@@ -12,7 +12,17 @@ const Header = () => {
   return (
     <header>
       <div className="fixed left-5 top-8">
-        <Image src={"/images/header/info.svg"} sizes="32px" width={32} height={32} alt="info" className="cursor-pointer" />
+        <Image
+          src={"/images/header/info.svg"}
+          sizes="32px"
+          width={32}
+          height={32}
+          alt="info"
+          className="cursor-pointer"
+          onClick={() => {
+            navigate("/")
+          }}
+        />
 
         <div className="absolute -left-[29px] -bottom-8 -z-10 w-18 h-20">
           <Image src={"/images/header/dandelion.png"} sizes="72px" fill alt="dandelion" />

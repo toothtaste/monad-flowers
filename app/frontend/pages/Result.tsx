@@ -36,7 +36,7 @@ const Result = () => {
               await sdk.actions.composeCast({
                 text: `Hey, @${
                   receiver?.username
-                }! 🌼👋\n\nA little flower gift is waiting for you — check it out:\n${`https://${"HOST"}/profile`}`,
+                }! 🌼👋\n\nMy little flower gift is waiting for you — check it out:\n${`https://warpcast.com/miniapps/KxLyvVqyb3-v/monad-flowers`}`,
                 embeds: [],
               })
             }}
@@ -52,7 +52,7 @@ const Result = () => {
         </div>
       </div>
 
-      <Button to="/" text="home" />
+      <Button to="/" text="back" />
     </main>
   )
 }
