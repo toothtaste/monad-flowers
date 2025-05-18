@@ -14,8 +14,6 @@ export async function GET(req: NextRequest) {
 
     const userGifts = await gifts.findOne({ fid: parseInt(fid!) })
 
-    console.log(userGifts)
-
     return NextResponse.json(userGifts)
   } catch (err) {
     console.error(err)
@@ -109,7 +107,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch (err) {
-    console.error(err)
     return new NextResponse("Internal Server Error", { status: 500 })
   }
 }

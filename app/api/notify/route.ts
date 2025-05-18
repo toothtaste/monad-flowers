@@ -1,5 +1,4 @@
 import axios from "axios"
-import console from "console"
 import { randomUUID } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
 import { users } from "../../../db"
@@ -35,7 +34,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch (err) {
-    console.error(err)
     return new NextResponse("Internal Server Error", { status: 500 })
   }
 }
