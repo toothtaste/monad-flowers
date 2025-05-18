@@ -18,10 +18,12 @@ const Header = () => {
             navigate("/")
           }}
         >
-          <Image src={"/images/header/info.svg"} sizes="100px" width={32} height={32} alt="info" />
+          <div className="flex justify-center items-center w-8 h-8 bg-white/60 rounded-full">
+            <Image src={"/images/header/home.svg"} sizes="24px" width={24} height={24} alt="info" />
+          </div>
         </div>
 
-        <div className="absolute -left-[29.5px] -bottom-8 -z-10 w-18 aspect-square">
+        <div className="absolute -left-[29px] -bottom-[32.5px] -z-10 w-18 aspect-square">
           <Image src={"/images/header/dandelion.png"} sizes="72px" fill alt="dandelion" />
         </div>
       </div>

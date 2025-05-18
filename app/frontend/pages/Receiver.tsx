@@ -40,7 +40,7 @@ const Receiver = () => {
   return (
     <main>
       <div
-        className="fixed top-22 min-[370px]:top-30 left-10 right-10
+        className="fixed top-24 min-[370px]:top-30 left-10 right-10
                text-black font-bold
                  rounded-3xl
                bg-[var(--accent)]
@@ -102,7 +102,9 @@ const Receiver = () => {
       </div>
 
       <Button
-        text={((isPending || isConfirming) && "minting...") || (chainId !== monadTestnet.id && "change network") || "gift"}
+        text={
+          ((isPending || isConfirming) && "minting...") || (chainId !== monadTestnet.id && "change network") || "gift"
+        }
         disabled={!receiver || isPending || isConfirming || chainId !== monadTestnet.id}
         onClick={async () => {
           if (!receiver) return

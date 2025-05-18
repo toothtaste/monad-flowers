@@ -23,7 +23,7 @@ const Flowers = () => {
   return (
     <main>
       <div
-        className="fixed top-22 min-[370px]:top-30 left-10 right-10
+        className="fixed top-24 min-[370px]:top-30 left-10 right-10
                  flex justify-center
                  pt-9 pb-14 min-[430px]:pb-20
                  rounded-2xl
