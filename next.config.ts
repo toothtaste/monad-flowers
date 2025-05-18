@@ -2,7 +2,7 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["attach-syndicate-beside-life.trycloudflare.com"],
+  allowedDevOrigins: ["oh-abc-capacity-meets.trycloudflare.com"],
   images: {
     remotePatterns: [
       {
