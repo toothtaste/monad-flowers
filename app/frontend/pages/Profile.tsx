@@ -18,7 +18,7 @@ const Profile = () => {
   return (
     <main>
       <div
-        className="fixed top-30 min-[390px]:top-32 left-10 right-10
+        className="fixed top-22 min-[370px]:top-30 left-10 right-10
                text-white font-bold
                  rounded-3xl
                bg-[var(--accent)]
@@ -33,7 +33,9 @@ const Profile = () => {
         >
           received gifts
         </div>
-        <div className={`flex flex-wrap justify-between px-2 min-[390px]:px-4 pt-4 h-77 overflow-y-scroll bg-white`}>
+        <div
+          className={`flex flex-wrap justify-between px-2 min-[390px]:px-4 pt-4 h-60 min-[390px]:h-77 overflow-y-scroll bg-white`}
+        >
           {data?.receivedGifts.map((g, i) =>
             Object.entries(g.flowers)
               .filter(([_, count]) => count > 0)

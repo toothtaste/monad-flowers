@@ -18,17 +18,17 @@ const Header = () => {
             navigate("/")
           }}
         >
-          <Image src={"/images/header/info.svg"} sizes="32px" width={32} height={32} alt="info" />
+          <Image src={"/images/header/info.svg"} sizes="100px" width={32} height={32} alt="info" />
         </div>
 
-        <div className="absolute -left-[29px] -bottom-9 -z-10 w-18 h-20">
+        <div className="absolute -left-[29.5px] -bottom-8 -z-10 w-18 aspect-square">
           <Image src={"/images/header/dandelion.png"} sizes="72px" fill alt="dandelion" />
         </div>
       </div>
 
       <div className="fixed left-0 right-0 min-[390px]:-top-3 flex justify-center pointer-events-none">
         <div className="relative w-41.5 h-18 min-[390px]:w-50 min-[390px]:h-22 min-[420px]:w-58">
-          <Image src={"/images/header/logo.svg"} sizes="166px" fill alt="logo" />
+          <Image src={"/images/header/logo.svg"} sizes="100px" fill alt="logo" />
         </div>
 
         <h1
@@ -46,11 +46,11 @@ const Header = () => {
             navigate("/profile")
           }}
         >
-          <Image src={user?.pfpUrl || "/images/user.svg"} sizes="31px" fill alt="profile" className="rounded-full" />
+          <Image src={user?.pfpUrl || "/images/user.svg"} sizes="100px" fill alt="profile" className="rounded-full" />
         </div>
 
         <div className="absolute -left-0.5 bottom-1 w-12 h-12">
-          <Image src={"/images/header/violet.png"} sizes="48px" fill alt="profile-flower" />
+          <Image src={"/images/header/violet.png"} sizes="100px" fill alt="profile-flower" />
         </div>
       </div>
     </header>

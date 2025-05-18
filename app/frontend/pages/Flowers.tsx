@@ -23,7 +23,7 @@ const Flowers = () => {
   return (
     <main>
       <div
-        className="fixed top-25 min-[370px]:top-30 left-10 right-10
+        className="fixed top-22 min-[370px]:top-30 left-10 right-10
                  flex justify-center
                  pt-9 pb-14 min-[430px]:pb-20
                  rounded-2xl
@@ -31,7 +31,7 @@ const Flowers = () => {
                  border-3 border-[var(--accent)]"
       >
         <div className="relative w-36 h-45 min-[370px]:h-60">
-          <Image src={`/images/flowers/${flower}.png`} sizes="144px" fill priority alt={flower} />
+          <Image src={`/images/flowers/${flower}.png`} sizes="300px" fill priority alt={flower} />
         </div>
 
         <div

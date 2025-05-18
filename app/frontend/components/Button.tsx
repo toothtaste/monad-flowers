@@ -6,11 +6,13 @@ const Button = ({
   onClick,
   text,
   disabled,
+  className,
 }: {
   to?: string
   onClick?: MouseEventHandler<HTMLButtonElement>
   text?: string
   disabled?: boolean
+  className?: string
 }) => {
   const navigate = useNavigate()
   return (
@@ -20,11 +22,12 @@ const Button = ({
         if (to) navigate(to)
       }}
       disabled={disabled}
-      className={`fixed bottom-12 left-13 right-13
+      className={`fixed bottom-8 min-[369px]:bottom-10 left-13 right-13
                  pt-2 pb-2.5
                text-white font-bold text-base min-[390px]:text-lg
                  rounded-2xl
                  bg-[var(--accent)]
+                 ${className ? className : ""}
                  ${disabled && "bg-[var(--inactive-accent)]"}`}
     >
       {text}

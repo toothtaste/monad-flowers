@@ -1,12 +1,8 @@
 import type { NextConfig } from "next"
 
-const { HOST } = process.env
-
 const nextConfig: NextConfig = {
   /* config options here */
-  ...(HOST && {
-    allowedDevOrigins: [HOST, "warpcast.com"],
-  }),
+  allowedDevOrigins: ["attach-syndicate-beside-life.trycloudflare.com"],
   images: {
     remotePatterns: [
       {
@@ -19,7 +15,7 @@ const nextConfig: NextConfig = {
   rewrites: async () => {
     return [
       {
-        source: "/((?!api/).*)",
+        source: "/((?!api/|_next/).*)",
         destination: "/shell",
       },
     ]
@@ -27,3 +23,5 @@ const nextConfig: NextConfig = {
 }
 
 export default nextConfig
+
+// |static/|favicon.ico

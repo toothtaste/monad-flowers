@@ -28,4 +28,41 @@
   button {
     @apply cursor-pointer;
   }
+
+  @keyframes swing-r {
+    0%,
+    100% {
+      transform: rotate(-2deg) translateX(3px) translateY(3px);
+    }
+    50% {
+      transform: rotate(2deg) translateX(-3px) translateY(-3px);
+    }
+  }
+
+  @keyframes swing-l {
+    0%,
+    100% {
+      transform: rotate(-1deg) translateX(-1px) translateY(-1px);
+    }
+    50% {
+      transform: rotate(1deg) translateX(1px) translateY(1px);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-swing-fadeIn-r {
+    animation: swing-r 5s ease-in-out infinite, fadeIn 2s ease forwards;
+  }
+
+  .animate-swing-fadeIn-l {
+    animation: swing-l 4s ease-in-out infinite, fadeIn 2s ease forwards;
+  }
 }

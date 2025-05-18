@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <main
-      className="fixed top-22 min-[370px]:top-33 left-10 right-10
+      className="fixed top-22 min-[369px]:top-30 left-10 right-10
                  text-black font-bold
                    rounded-2xl
                  bg-white
@@ -34,7 +34,7 @@ export default function Home() {
       >
         guide
       </div>
-      <div className="flex flex-col gap-3 px-3 pt-[9px] pb-3.5 text-sm min-[420px]:text-base leading-6">
+      <div className="flex flex-col gap-2 min-[369px]:gap-3 px-3 pt-[9px] pb-3.5 text-sm min-[419px]:text-base leading-6">
         <p>
           Select a&nbsp;flower you&rsquo;d like to&nbsp;gift, choose a&nbsp;recipient, and pay for everything with test MON
           tokens.
