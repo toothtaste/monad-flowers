@@ -108,11 +108,11 @@ export default function RootLayout({
           <Image key={f} src={`/images/flowers/${f}.png`} sizes="300px" fill priority alt={f} className="hidden" />
         ))}
 
-        <Image src={"/images/header/home.svg"} sizes="24px" width={24} height={24} alt="info" />
-        <Image src={"/images/header/dandelion.png"} sizes="72px" fill alt="dandelion" />
-        <Image src={"/images/header/logo.svg"} sizes="100px" fill alt="logo" />
-        <Image src={"/images/user.svg"} sizes="100px" fill alt="profile" className="rounded-full" />
-        <Image src={"/images/header/violet.png"} sizes="100px" fill alt="profile-flower" />
+        <Image src={"/images/header/home.svg"} sizes="24px" width={24} height={24} alt="info" className="hidden" />
+        <Image src={"/images/header/dandelion.png"} sizes="72px" fill alt="dandelion" className="hidden" />
+        <Image src={"/images/header/logo.svg"} sizes="100px" fill alt="logo" className="hidden" />
+        <Image src={"/images/user.svg"} sizes="100px" fill alt="profile" className="hidden" />
+        <Image src={"/images/header/violet.png"} sizes="100px" fill alt="profile-flower" className="hidden" />
       </body>
     </html>
   )
