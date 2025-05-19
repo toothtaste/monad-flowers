@@ -64,7 +64,6 @@ export default function RootLayout({
         <Providers>
           <Farcaster>{children}</Farcaster>
         </Providers>
-
         <div
           className={`
               fixed -right-5 min-[429px]:-right-5 top-19 min-[369px]:top-23 min-[429px]:top-27
@@ -80,7 +79,6 @@ export default function RootLayout({
             sizes="(min-width: 429px) 108px, (min-width: 369px) 96px, 88px"
           />
         </div>
-
         <div
           className={`fixed -left-8 min-[369px]:-left-11 top-82 min-[369px]:top-79 min-[429px]:top-78
                      w-23 min-[369px]:w-28 min-[429px]:w-28
@@ -96,7 +94,6 @@ export default function RootLayout({
             alt="violets"
           />
         </div>
-
         <div
           className={`fixed -right-10 -bottom-10
                      w-27 min-[369px]:w-30
@@ -110,6 +107,12 @@ export default function RootLayout({
         {["rose", "daisy", "lily", "sunflower", "tulip"].map(f => (
           <Image key={f} src={`/images/flowers/${f}.png`} sizes="300px" fill priority alt={f} className="hidden" />
         ))}
+
+        <Image src={"/images/header/home.svg"} sizes="24px" width={24} height={24} alt="info" />
+        <Image src={"/images/header/dandelion.png"} sizes="72px" fill alt="dandelion" />
+        <Image src={"/images/header/logo.svg"} sizes="100px" fill alt="logo" />
+        <Image src={"/images/user.svg"} sizes="100px" fill alt="profile" className="rounded-full" />
+        <Image src={"/images/header/violet.png"} sizes="100px" fill alt="profile-flower" />
       </body>
     </html>
   )
