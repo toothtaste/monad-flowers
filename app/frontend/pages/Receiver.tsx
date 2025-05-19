@@ -59,7 +59,7 @@ const Receiver = () => {
         </div>
         <div className={`h-50 min-[390px]:h-65 overflow-y-scroll `}>
           {isLoading &&
-            Array.from({ length: 7 }).map((_, i) => (
+            Array.from({ length: 9 }).map((_, i) => (
               <div key={i} className="flex items-center gap-3 px-3 pt-3 last:pb-3 bg-white overflow-hidden">
                 <div className="bg-gray-200 w-5 h-5 rounded-full animate-pulse"></div>
                 <div className="bg-gray-200 w-full h-4 rounded animate-pulse"></div>

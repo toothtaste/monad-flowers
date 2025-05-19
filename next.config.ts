@@ -2,7 +2,7 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["theft-fo-miniature-obtaining.trycloudflare.com"],
+  allowedDevOrigins: ["eg-continued-guestbook-soon.trycloudflare.com"],
   images: {
     remotePatterns: [
       {
