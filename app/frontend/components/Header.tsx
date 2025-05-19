@@ -18,19 +18,19 @@ const Header = () => {
             navigate("/")
           }}
         >
-          <div className="flex justify-center items-center w-8 h-8 bg-white/60 rounded-full">
-            <Image src={"/images/header/home.svg"} sizes="24px" width={24} height={24} alt="info" />
+          <div className="flex justify-center items-center aspect-square w-8 bg-white/60 rounded-full">
+            <Image src={"/images/header/home.svg"} sizes="24px" priority width={24} height={24} alt="info" />
           </div>
         </div>
 
-        <div className="absolute -left-[29px] -bottom-[32.5px] -z-10 w-18 aspect-square">
-          <Image src={"/images/header/dandelion.png"} sizes="72px" fill alt="dandelion" />
+        <div className="absolute -left-[29px] -bottom-[32.5px] -z-10 aspect-square w-18">
+          <Image src={"/images/header/dandelion.png"} sizes="72px" priority fill alt="dandelion" />
         </div>
       </div>
 
       <div className="fixed left-0 right-0 min-[390px]:-top-3 flex justify-center pointer-events-none">
-        <div className="relative w-41.5 h-18 min-[390px]:w-50 min-[390px]:h-22 min-[420px]:w-58">
-          <Image src={"/images/header/logo.svg"} sizes="100px" fill alt="logo" />
+        <div className="relative aspect-[166/71] w-41.5 min-[390px]:w-50 min-[390px]:h-22 min-[420px]:w-58">
+          <Image src={"/images/header/logo.svg"} sizes="166px" priority fill alt="logo" />
         </div>
 
         <h1
@@ -43,16 +43,23 @@ const Header = () => {
 
       <div className="fixed right-5 top-8">
         <div
-          className="relative z-10 w-[31px] h-[31px] bg-[var(--accent)] rounded-full outline-2 outline-[var(--accent)] cursor-pointer"
+          className="relative z-10 aspect-square w-[31px] bg-[var(--accent)] rounded-full outline-2 outline-[var(--accent)] cursor-pointer"
           onClick={() => {
             navigate("/profile")
           }}
         >
-          <Image src={user?.pfpUrl || "/images/user.svg"} sizes="100px" fill alt="profile" className="rounded-full" />
+          <Image
+            src={user?.pfpUrl || "/images/user.svg"}
+            sizes="31px"
+            priority
+            fill
+            alt="profile"
+            className="rounded-full"
+          />
         </div>
 
-        <div className="absolute -left-0.5 bottom-1 w-12 h-12">
-          <Image src={"/images/header/violet.png"} sizes="100px" fill alt="profile-flower" />
+        <div className="absolute -left-0.5 bottom-1 aspect-square w-12">
+          <Image src={"/images/header/violet.png"} sizes="48px" priority fill alt="profile-flower" />
         </div>
       </div>
     </header>

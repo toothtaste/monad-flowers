@@ -54,13 +54,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="fc:frame" content={JSON.stringify(frame)} />
+        <link rel="preload" href="/images/bg.jpg" as="image" />
       </head>
-      <body
-        className={`${karla.variable} ${mogra.variable} antialiased`}
-        style={{
-          background: "oklch(0.48 0.1595 305.83) url(/images/bg.jpg) center/cover no-repeat",
-        }}
-      >
+      <body className={`${karla.variable} ${mogra.variable} antialiased`}>
+        <Image src="/images/bg.jpg" alt="bg" fill sizes="100vw" priority className="object-cover" />
+
         <Providers>
           <Farcaster>{children}</Farcaster>
         </Providers>
@@ -77,6 +75,7 @@ export default function RootLayout({
             fill
             alt="roses"
             sizes="(min-width: 429px) 108px, (min-width: 369px) 96px, 88px"
+            priority
           />
         </div>
         <div
@@ -90,6 +89,7 @@ export default function RootLayout({
           <Image
             src={"/images/violets.png"}
             sizes="(min-width: 429px) 120px, (min-width: 369px) 112px, 96px"
+            priority
             fill
             alt="violets"
           />
@@ -101,18 +101,18 @@ export default function RootLayout({
                      z-10 pointer-events-none
                      animate-swing-fadeIn-r`}
         >
-          <Image src={"/images/blue-flower.png"} sizes="(min-width: 369px) 88px, 80px" fill alt="blue-flower" />
+          <Image
+            src={"/images/blue-flower.png"}
+            sizes="(min-width: 369px) 88px, 80px"
+            priority
+            fill
+            alt="blue-flower"
+          />
         </div>
 
         {["rose", "daisy", "lily", "sunflower", "tulip"].map(f => (
           <Image key={f} src={`/images/flowers/${f}.png`} sizes="300px" fill priority alt={f} className="hidden" />
         ))}
-
-        <Image src={"/images/header/home.svg"} sizes="24px" width={24} height={24} alt="info" className="hidden" />
-        <Image src={"/images/header/dandelion.png"} sizes="72px" fill alt="dandelion" className="hidden" />
-        <Image src={"/images/header/logo.svg"} sizes="100px" fill alt="logo" className="hidden" />
-        <Image src={"/images/user.svg"} sizes="100px" fill alt="profile" className="hidden" />
-        <Image src={"/images/header/violet.png"} sizes="100px" fill alt="profile-flower" className="hidden" />
       </body>
     </html>
   )
