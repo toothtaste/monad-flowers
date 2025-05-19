@@ -1,20 +1,17 @@
 import { verifySession } from "@/lib/api/utils/verifySession"
-import console from "console"
 import { randomUUID } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { gifts } from "../../../db"
+import { giftsCollection } from "../../../db"
 
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url)
-    const fid = url.searchParams.get("fid")
+    const fid = z.string().min(1).parse(url.searchParams.get("fid"))
 
-    z.string().min(1, "fid not defined").parse(fid)
+    const gifts = await giftsCollection.findOne({ fid: parseInt(fid) })
 
-    const userGifts = await gifts.findOne({ fid: parseInt(fid!) })
-
-    return NextResponse.json(userGifts)
+    return NextResponse.json(gifts)
   } catch (err) {
     console.error(err)
     return new NextResponse("Internal Server Error", { status: 500 })
@@ -23,21 +20,13 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const {
-      session,
-      receiverFid,
-      flowerName,
-    }: { session: string; receiverFid: number; flowerName: "daisy" | "lily" | "rose" | "sunflower" | "tulip" } = await req.json()
-
-    z.object({
-      session: z.string(),
-      receiverFid: z.number(),
-      flowerName: z.enum(["rose", "tulip", "daisy", "sunflower", "lily"]),
-    }).parse({
-      session,
-      receiverFid,
-      flowerName,
-    })
+    const { session, receiverFid, flower } = z
+      .object({
+        session: z.string(),
+        receiverFid: z.number(),
+        flower: z.enum(["rose", "tulip", "daisy", "sunflower", "lily"]),
+      })
+      .parse(await req.json())
 
     const { fid } = verifySession(session)
 
@@ -45,17 +34,17 @@ export async function POST(req: NextRequest) {
       `https://hub.pinata.cloud/v1/userDataByFid?fid=${fid}&user_data_type=USER_DATA_TYPE_USERNAME`,
       {
         method: "GET",
-      }
+      },
     ).then(res => res.json())
 
     const username = messages[0]?.data?.userDataBody?.value
 
-    if (!username) throw new Error("no username got")
+    if (!username) throw new Error("UsernameNotFetched")
 
-    const userGifts = await gifts.findOne({ fid: receiverFid })
+    const userGifts = await giftsCollection.findOne({ fid: receiverFid })
 
     if (!userGifts) {
-      const newGift = {
+      const newUserGifts = {
         sender: username,
         flowers: {
           daisy: 0,
@@ -66,47 +55,48 @@ export async function POST(req: NextRequest) {
         },
       }
 
-      newGift.flowers[flowerName]++
+      newUserGifts.flowers[flower]++
 
-      const userGift = {
+      const gift = {
         uuid: randomUUID(),
         fid: receiverFid,
-        receivedGifts: [newGift],
+        receivedGifts: [newUserGifts],
         createdAt: new Date(),
       }
 
-      await gifts.insertOne(userGift)
+      await giftsCollection.insertOne(gift)
     } else {
-      const existingGift = userGifts.receivedGifts.find(gift => gift.sender === username)
+      const prevGifts = userGifts.receivedGifts.find(gift => gift.sender === username)
 
-      if (existingGift) {
-        await gifts.updateOne(
+      if (prevGifts) {
+        await giftsCollection.updateOne(
           { fid: receiverFid, "receivedGifts.sender": username },
-          { $inc: { [`receivedGifts.$.flowers.${flowerName}`]: 1 } }
+          { $inc: { [`receivedGifts.$.flowers.${flower}`]: 1 } },
         )
       } else {
-        await gifts.updateOne(
+        await giftsCollection.updateOne(
           { fid: receiverFid },
           {
             $push: {
               receivedGifts: {
                 sender: username,
                 flowers: {
-                  daisy: flowerName === "daisy" ? 1 : 0,
-                  lily: flowerName === "lily" ? 1 : 0,
-                  rose: flowerName === "rose" ? 1 : 0,
-                  sunflower: flowerName === "sunflower" ? 1 : 0,
-                  tulip: flowerName === "tulip" ? 1 : 0,
+                  daisy: flower === "daisy" ? 1 : 0,
+                  lily: flower === "lily" ? 1 : 0,
+                  rose: flower === "rose" ? 1 : 0,
+                  sunflower: flower === "sunflower" ? 1 : 0,
+                  tulip: flower === "tulip" ? 1 : 0,
                 },
               },
             },
-          }
+          },
         )
       }
     }
 
     return NextResponse.json({ success: true })
   } catch (err) {
+    console.error(err)
     return new NextResponse("Internal Server Error", { status: 500 })
   }
 }

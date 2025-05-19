@@ -2,7 +2,7 @@ import { parseWebhookEvent, ParseWebhookEvent, verifyAppKeyWithNeynar } from "@f
 import axios from "axios"
 import { randomUUID } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
-import { users } from "../../../db"
+import { usersCollection } from "../../../db"
 
 export async function POST(req: NextRequest) {
   try {
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     switch (event.event) {
       case "frame_added":
         if (event.notificationDetails) {
-          await users.updateOne({ fid }, { $set: { notificationToken: event.notificationDetails.token } })
+          await usersCollection.updateOne({ fid }, { $set: { notificationToken: event.notificationDetails.token } })
 
           await axios.post("https://api.warpcast.com/v1/frame-notifications", {
             notificationId: randomUUID(),
@@ -42,16 +42,16 @@ export async function POST(req: NextRequest) {
             tokens: [event.notificationDetails.token],
           })
         } else {
-          await users.updateOne({ fid }, { $unset: { notificationToken: "" } })
+          await usersCollection.updateOne({ fid }, { $unset: { notificationToken: "" } })
         }
 
         break
       case "frame_removed":
-        await users.updateOne({ fid }, { $unset: { notificationToken: "" } })
+        await usersCollection.updateOne({ fid }, { $unset: { notificationToken: "" } })
 
         break
       case "notifications_enabled":
-        await users.updateOne({ fid }, { $set: { notificationToken: event.notificationDetails.token } })
+        await usersCollection.updateOne({ fid }, { $set: { notificationToken: event.notificationDetails.token } })
         await axios.post("https://api.warpcast.com/v1/frame-notifications", {
           notificationId: randomUUID(),
           title: "Monad Flowers",
@@ -62,12 +62,13 @@ export async function POST(req: NextRequest) {
 
         break
       case "notifications_disabled":
-        await users.updateOne({ fid }, { $unset: { notificationToken: "" } })
+        await usersCollection.updateOne({ fid }, { $unset: { notificationToken: "" } })
         break
     }
 
     return NextResponse.json({ success: true })
   } catch (err) {
+    console.error(err)
     return new NextResponse("Internal Server Error", { status: 500 })
   }
 }

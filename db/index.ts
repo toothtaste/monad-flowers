@@ -12,7 +12,7 @@ type DatabaseFields = {
   createdAt: Date
 }
 
-export type Gifts = {
+export type GiftsCollection = {
   fid: number
   receivedGifts: {
     sender: string
@@ -28,5 +28,8 @@ export type Gifts = {
 
 export const db = client.db("main")
 
-export const users = db.collection<UserContext & DatabaseFields & { notificationToken?: string; lastLogged: Date }>("users")
-export const gifts = db.collection<Gifts & DatabaseFields>("gifts")
+export const usersCollection = db.collection<
+  UserContext & DatabaseFields & { notificationToken?: string; lastLogged: Date }
+>("users")
+
+export const giftsCollection = db.collection<GiftsCollection & DatabaseFields>("gifts")

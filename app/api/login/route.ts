@@ -2,15 +2,22 @@ import { createAppClient, viemConnector } from "@farcaster/auth-client"
 import { randomUUID } from "crypto"
 import jwt from "jsonwebtoken"
 import { NextRequest, NextResponse } from "next/server"
-import { users } from "../../../db"
+import { z } from "zod"
+import { usersCollection } from "../../../db"
 
 const { HOST, JWT_SECRET } = process.env
 
 export async function POST(req: NextRequest) {
-  if (!(HOST && JWT_SECRET)) throw new Error("Credentials not defined")
+  if (!(HOST && JWT_SECRET)) throw new Error("CredentialsNotConfigured")
 
   try {
-    const { message, signature, nonce } = await req.json()
+    const { message, signature, nonce } = z
+      .object({
+        message: z.string(),
+        signature: z.string(),
+        nonce: z.string(),
+      })
+      .parse(await req.json())
 
     const appClient = createAppClient({
       relay: "https://relay.farcaster.xyz",
@@ -19,17 +26,20 @@ export async function POST(req: NextRequest) {
 
     const { data, success, fid, isError, error } = await appClient.verifySignInMessage({
       message,
-      signature,
+      signature: signature as `0x${string}`,
       nonce,
       domain: HOST,
     })
 
-    if (!success) throw new Error("Unsuccessful verification")
+    if (isError || !success) throw new Error("VerifySignInMessageError")
 
-    const user = await users.findOne({ fid })
+    const user = await usersCollection.findOne({ fid })
 
-    if (!user) await users.insertOne({ uuid: randomUUID(), fid, lastLogged: new Date(), createdAt: new Date() })
-    else await users.updateOne({ fid }, { $set: { lastLogged: new Date() } })
+    if (!user) {
+      await usersCollection.insertOne({ uuid: randomUUID(), fid, lastLogged: new Date(), createdAt: new Date() })
+    } else {
+      await usersCollection.updateOne({ fid }, { $set: { lastLogged: new Date() } })
+    }
 
     const payload = {
       fid,
@@ -40,6 +50,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, session })
   } catch (err) {
+    console.error(err)
     return new NextResponse("Internal Server Error", { status: 500 })
   }
 }

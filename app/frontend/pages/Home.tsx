@@ -2,6 +2,7 @@
 
 import { updateStore } from "@/lib/store"
 import { Flower } from "@/lib/store/types"
+import clsx from "clsx"
 import { useEffect } from "react"
 import { useAccount, useConnect } from "wagmi"
 import Button from "../components/Button"
@@ -19,25 +20,33 @@ export default function Home() {
 
   return (
     <main
-      className="fixed top-24 min-[369px]:top-30 left-10 right-10
-                 text-black font-bold
-                   rounded-2xl
-                 bg-white
-                   tracking-widest
-                   border-3 border-[var(--accent)]"
+      className={clsx(
+        "fixed top-24 min-[369px]:top-30 left-10 right-10",
+        "text-black font-bold",
+        "rounded-2xl",
+        "bg-white",
+        "tracking-widest",
+        "border-3 border-[var(--accent)]",
+      )}
     >
       <div
-        className="bg-[var(--accent)]
-                     text-base min-[360px]:text-lg min-[420px]:text-xl text-white text-center
-                     pb-1.5
-                     rounded-t-lg"
+        className={clsx(
+          "bg-[var(--accent)]",
+          "text-base min-[360px]:text-lg min-[420px]:text-xl",
+          "text-white text-center",
+          "pb-1.5",
+          "rounded-t-lg",
+        )}
       >
         guide
       </div>
       <div
-        className={`flex flex-col gap-2 min-[369px]:gap-3
-                    px-3 pt-[9px] pb-3.5
-                    text-xs min-[360px]:text-sm min-[419px]:text-base leading-6`}
+        className={clsx(
+          "flex flex-col gap-2 min-[369px]:gap-3",
+          "px-3 pt-[9px] pb-3.5",
+          "text-xs min-[360px]:text-sm min-[419px]:text-base",
+          "leading-6",
+        )}
       >
         <p>
           Select a&nbsp;flower you&rsquo;d like to&nbsp;gift, choose a&nbsp;recipient, and pay for everything with test

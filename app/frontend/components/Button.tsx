@@ -1,3 +1,4 @@
+import clsx from "clsx"
 import { MouseEventHandler } from "react"
 import { useNavigate } from "react-router"
 
@@ -15,6 +16,7 @@ const Button = ({
   className?: string
 }) => {
   const navigate = useNavigate()
+
   return (
     <button
       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -22,13 +24,16 @@ const Button = ({
         if (to) navigate(to)
       }}
       disabled={disabled}
-      className={`fixed bottom-8 min-[369px]:bottom-10 left-13 right-13
-                 pt-2 pb-2.5
-               text-white font-bold text-base min-[390px]:text-lg
-                 rounded-2xl
-                 bg-[var(--accent)]
-                 ${className ? className : ""}
-                 ${disabled && "bg-[var(--inactive-accent)]"}`}
+      className={clsx(
+        "fixed bottom-8 left-13 right-13",
+        "min-[369px]:bottom-10",
+        "pt-2 pb-2.5",
+        "text-white font-bold text-base",
+        "min-[390px]:text-lg",
+        "rounded-2xl",
+        disabled ? "bg-[var(--inactive-accent)]" : "bg-[var(--accent)]",
+        className,
+      )}
     >
       {text}
     </button>

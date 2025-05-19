@@ -2,6 +2,7 @@
 
 import { EMOJIES_MAP } from "@/lib/constants"
 import { store, updateStore } from "@/lib/store"
+import clsx from "clsx"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
@@ -23,14 +24,16 @@ const Flowers = () => {
   return (
     <main>
       <div
-        className="fixed top-24 min-[370px]:top-30 left-10 right-10
-                 flex justify-center
-                 pt-9 pb-14 min-[430px]:pb-20
-                 rounded-2xl
-               bg-white
-                 border-3 border-[var(--accent)]"
+        className={clsx(
+          "fixed top-24 min-[370px]:top-30 left-10 right-10",
+          "flex justify-center",
+          "pt-9 pb-14 min-[430px]:pb-20",
+          "rounded-2xl",
+          "bg-white",
+          "border-3 border-[var(--accent)]",
+        )}
       >
-        <div className="relative aspect-[144/180] w-36 min-[370px]:h-60">
+        <div className={clsx("relative", "aspect-[144/180]", "w-36", "min-[370px]:h-60")}>
           <Image src={`/images/flowers/${flower}.png`} sizes="300px" fill priority alt={flower} />
         </div>
 
@@ -44,9 +47,7 @@ const Flowers = () => {
 
             updateStore({ flower: EMOJIES_MAP[clicked] })
           }}
-          className="absolute bottom-2
-                   flex gap-2
-                   text-lg min-[430px]:text-2xl tracking-widest"
+          className={clsx("absolute bottom-2", "flex gap-2", "text-lg min-[430px]:text-2xl tracking-widest")}
         >
           {["🌹", "🌼", "🌺", "🌻", "🌷"].map((em, i) => (
             <div key={i} className="cursor-pointer">

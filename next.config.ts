@@ -2,7 +2,7 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["bathrooms-forming-georgia-llp.trycloudflare.com"],
+  allowedDevOrigins: ["totals-critical-adjacent-michel.trycloudflare.com"],
   images: {
     remotePatterns: [
       {
@@ -23,5 +23,3 @@ const nextConfig: NextConfig = {
 }
 
 export default nextConfig
-
-// |static/|favicon.ico

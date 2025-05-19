@@ -1,16 +1,25 @@
 import axios from "axios"
 import { randomUUID } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
-import { users } from "../../../db"
+import { z } from "zod"
+import { usersCollection } from "../../../db"
 
 export async function POST(req: NextRequest) {
   try {
-    const { secret, title, body } = await req.json()
+    const { secret, title, body } = z
+      .object({
+        secret: z.string(),
+        title: z.string(),
+        body: z.string(),
+      })
+      .parse(await req.json())
 
-    if (secret !== "p123jpoix9it4jhlsfkjgapsif934209kpaxvk") throw new Error("Unauthorized access")
+    if (secret !== process.env.JWT_SECRET!) throw new Error("NotifyAccessDenied")
 
     const notificationTokens = (
-      await users.find({ notificationToken: { $exists: true } }, { projection: { notificationToken: 1, _id: 0 } }).toArray()
+      await usersCollection
+        .find({ notificationToken: { $exists: true } }, { projection: { notificationToken: 1, _id: 0 } })
+        .toArray()
     ).map(val => val.notificationToken)
 
     for (let i = 0; i < notificationTokens.length; i += 100) {
@@ -28,12 +37,16 @@ export async function POST(req: NextRequest) {
 
       if (invalidTokens.length) {
         console.log("invalidTokens", invalidTokens)
-        await users.updateMany({ notificationToken: { $in: invalidTokens } }, { $unset: { notificationToken: "" } })
+        await usersCollection.updateMany(
+          { notificationToken: { $in: invalidTokens } },
+          { $unset: { notificationToken: "" } },
+        )
       }
     }
 
     return NextResponse.json({ success: true })
   } catch (err) {
+    console.error(err)
     return new NextResponse("Internal Server Error", { status: 500 })
   }
 }
