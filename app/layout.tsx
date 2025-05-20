@@ -101,13 +101,7 @@ export default function RootLayout({
                      z-10 pointer-events-none
                      animate-swing-fadeIn-r`}
         >
-          <Image
-            src={"/images/blue-flower.png"}
-            sizes="(min-width: 369px) 88px, 80px"
-            priority
-            fill
-            alt="blue-flower"
-          />
+          <Image src={"/images/blue-flower.png"} sizes="(min-width: 369px) 88px, 80px" priority fill alt="blue-flower" />
         </div>
 
         {["rose", "daisy", "lily", "sunflower", "tulip"].map(f => (

@@ -1,5 +1,6 @@
 import clientErrorHandling from "@/lib/clientErrorsReporting"
 import { BrowserRouter, Route, Routes } from "react-router"
+import Bee from "./components/Bee"
 import Header from "./components/Header"
 import Flowers from "./pages/Flowers"
 import Home from "./pages/Home"
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/result" element={<Result />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
+      <Bee />
     </BrowserRouter>
   )
 }

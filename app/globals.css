@@ -65,4 +65,78 @@
   .animate-swing-fadeIn-l {
     animation: swing-l 4s ease-in-out infinite, fadeIn 2s ease forwards;
   }
+
+  @keyframes bee-flight {
+    0% {
+      opacity: 0;
+      transform: translate(-15vw, 2vh) rotate(-10deg) scale(0.9);
+    }
+    5% {
+      opacity: 1;
+      transform: translate(0vw, -4vh) rotate(15deg) scale(1.05);
+    }
+    10% {
+      transform: translate(5vw, 3vh) rotate(-10deg) scale(0.95);
+    }
+    15% {
+      transform: translate(10vw, -5vh) rotate(10deg) scale(1.02);
+    }
+    20% {
+      transform: translate(15vw, 6vh) rotate(-15deg) scale(0.98);
+    }
+    25% {
+      transform: translate(20vw, -2vh) rotate(20deg) scale(1.05);
+    }
+    30% {
+      transform: translate(25vw, 5vh) rotate(-10deg) scale(0.95);
+    }
+    35% {
+      transform: translate(30vw, -3vh) rotate(15deg) scale(1.1);
+    }
+    40% {
+      transform: translate(35vw, 4vh) rotate(-15deg) scale(0.9);
+    }
+    45% {
+      transform: translate(40vw, -4vh) rotate(10deg) scale(1.05);
+    }
+    50% {
+      transform: translate(45vw, 2vh) rotate(-10deg) scale(1);
+    }
+    55% {
+      transform: translate(50vw, -6vh) rotate(10deg) scale(1.02);
+    }
+    60% {
+      transform: translate(55vw, 4vh) rotate(-10deg) scale(0.95);
+    }
+    65% {
+      transform: translate(60vw, -3vh) rotate(15deg) scale(1.05);
+    }
+    70% {
+      transform: translate(65vw, 5vh) rotate(-15deg) scale(0.9);
+    }
+    75% {
+      transform: translate(70vw, -2vh) rotate(10deg) scale(1.02);
+    }
+    80% {
+      transform: translate(75vw, 3vh) rotate(-10deg) scale(1);
+    }
+    85% {
+      transform: translate(80vw, -4vh) rotate(10deg) scale(1.05);
+    }
+    90% {
+      transform: translate(90vw, 5vh) rotate(-10deg) scale(0.95);
+    }
+    95% {
+      opacity: 1;
+      transform: translate(100vw, -1vh) rotate(0deg) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(115vw, -4vh) rotate(0deg) scale(1);
+    }
+  }
+
+  .animate-bee-flight {
+    animation: bee-flight 14s ease-in-out infinite;
+  }
 }
