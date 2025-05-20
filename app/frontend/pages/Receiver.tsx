@@ -9,7 +9,7 @@ import clsx from "clsx"
 import { Suspense, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router"
 import { monadTestnet } from "viem/chains"
-import { useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
+import { useChainId, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
 import Button from "../components/Button"
 
 const Receiver = () => {
@@ -23,7 +23,7 @@ const Receiver = () => {
     enabled: !!user?.fid,
   })
 
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(Math.floor(follows?.length / 10))
 
   useEffect(() => {
     async function main() {
@@ -68,7 +68,8 @@ const Receiver = () => {
 
   const { data: hash, isPending, writeContractAsync } = useWriteContract()
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ chainId: monadTestnet.id, hash })
-  const { switchChainAsync } = useSwitchChain()
+  const { switchChainAsync, switchChain } = useSwitchChain()
+  const chainId = useChainId()
 
   const { mutateAsync: giftMutateAsync } = useMutation({
     mutationFn: async (flower: "daisy" | "lily" | "rose" | "sunflower" | "tulip") =>
@@ -96,14 +97,14 @@ const Receiver = () => {
           users you follow
         </div>
         <div className={`h-50 min-[390px]:h-65 overflow-y-scroll `}>
-          {!follows.length &&
-            isLoading &&
-            Array.from({ length: 9 }).map((_, i) => (
-              <div key={i} className="flex items-center gap-3 px-3 pt-3 last:pb-3 bg-white overflow-hidden">
-                <div className="bg-gray-200 w-5 h-5 rounded-full animate-pulse"></div>
-                <div className="bg-gray-200 w-full h-4 rounded animate-pulse"></div>
-              </div>
-            ))}
+          {!follows.length ||
+            (isLoading &&
+              Array.from({ length: 9 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-3 px-3 pt-3 last:pb-3 bg-white overflow-hidden">
+                  <div className="bg-gray-200 w-5 h-5 rounded-full animate-pulse"></div>
+                  <div className="bg-gray-200 w-full h-4 rounded animate-pulse"></div>
+                </div>
+              )))}
           {follows &&
             follows.map((user: UserData) => (
               <div
@@ -148,11 +149,15 @@ const Receiver = () => {
         text={((isPending || isConfirming) && "minting...") || "gift"}
         disabled={!receiver || isPending || isConfirming}
         onClick={async () => {
+          if (!receiver) return
+
           const { flower } = store.getState()
 
-          if (!receiver || !flower) return
+          // if (chainId !== monadTestnet.id)
 
-          await switchChainAsync({ chainId: monadTestnet.id }).catch()
+          try {
+            await switchChainAsync({ chainId: monadTestnet.id })
+          } catch (error) {}
 
           await writeContractAsync({
             address: CA,
