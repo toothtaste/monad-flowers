@@ -97,14 +97,13 @@ const Receiver = () => {
           users you follow
         </div>
         <div className={`h-50 min-[390px]:h-65 overflow-y-scroll `}>
-          {!follows.length ||
-            (isLoading &&
-              Array.from({ length: 9 }).map((_, i) => (
-                <div key={i} className="flex items-center gap-3 px-3 pt-3 last:pb-3 bg-white overflow-hidden">
-                  <div className="bg-gray-200 w-5 h-5 rounded-full animate-pulse"></div>
-                  <div className="bg-gray-200 w-full h-4 rounded animate-pulse"></div>
-                </div>
-              )))}
+          {(!follows.length || isLoading) &&
+            Array.from({ length: 9 }).map((_, i) => (
+              <div key={i} className="flex items-center gap-3 px-3 pt-3 last:pb-3 bg-white overflow-hidden">
+                <div className="bg-gray-200 w-5 h-5 rounded-full animate-pulse"></div>
+                <div className="bg-gray-200 w-full h-4 rounded animate-pulse"></div>
+              </div>
+            ))}
           {follows &&
             follows.map((user: UserData) => (
               <div
