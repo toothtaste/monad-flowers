@@ -2,7 +2,7 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["totals-critical-adjacent-michel.trycloudflare.com"],
+  allowedDevOrigins: [process.env.HOST!],
   images: {
     remotePatterns: [
       {

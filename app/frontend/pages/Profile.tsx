@@ -90,7 +90,7 @@ const Profile = () => {
                   "rounded-2xl",
                   "border-2 border-[var(--accent)]",
                   "overflow-hidden",
-                  "animate-pulse bg-neutral-200",
+                  "animate-pulse bg-gray-200",
                 )}
               ></div>
             ))
