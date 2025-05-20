@@ -3,12 +3,9 @@
 import { store } from "@/lib/store"
 import sdk from "@farcaster/frame-sdk"
 import clsx from "clsx"
-import { useParams } from "react-router"
 import Button from "../components/Button"
 
 const Result = () => {
-  const { hash } = useParams() as { hash: `0x${string}` | undefined }
-
   const { receiver } = store()
 
   const btnClick = async () => {

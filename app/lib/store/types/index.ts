@@ -42,6 +42,7 @@ export type StoreData = {
   client?: ClientContext
   flower: Flower
   receiver?: UserData
+  follows: UserData[]
 
   updateStore: (newState: Partial<StoreData> | ((prev: StoreData) => Partial<StoreData>)) => void
 }
