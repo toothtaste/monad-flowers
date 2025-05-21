@@ -11,13 +11,10 @@ import { monadTestnet } from "viem/chains"
 import { createConfig, WagmiProvider } from "wagmi"
 import { updateStore } from "../store"
 
-const { NEXT_PUBLIC_HOST } = process.env
-if (!NEXT_PUBLIC_HOST) throw new Error("WagmiCredentialsNotConfigured")
-
 const wagmiConfig = createConfig({
   chains: [monadTestnet],
   transports: {
-    [monadTestnet.id]: http(`https://${NEXT_PUBLIC_HOST}/api/rpc`),
+    [monadTestnet.id]: http(`https://${process.env.NEXT_PUBLIC_HOST}/api/rpc`),
   },
   connectors: [miniAppConnector()],
 })

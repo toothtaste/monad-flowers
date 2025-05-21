@@ -52,7 +52,6 @@ const Receiver = () => {
     if (follows?.length >= links?.length) return
 
     const observer = new IntersectionObserver(entries => {
-      console.log(1)
       if (entries[0].isIntersecting) {
         if (page * 10 >= links.length) return observer.disconnect()
         setPage(prev => prev + 1)
