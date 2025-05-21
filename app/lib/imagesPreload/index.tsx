@@ -1,0 +1,57 @@
+import Image from "next/image"
+
+const ImagesPreload = () => {
+  return (
+    <div>
+      <Image src="/images/bg.jpg" alt="bg" fill sizes="100vw" priority className="object-cover" />
+
+      <div
+        className={`
+              fixed -right-5 min-[429px]:-right-5 top-19 min-[369px]:top-23 min-[429px]:top-27
+              w-22 min-[369px]:w-24 min-[429px]:w-26
+              aspect-[131/234] z-10 pointer-events-none
+              -rotate-12
+              animate-swing-fadeIn-r`}
+      >
+        <Image
+          src="/images/roses.png"
+          fill
+          alt="roses"
+          sizes="(min-width: 429px) 108px, (min-width: 369px) 96px, 88px"
+          priority
+        />
+      </div>
+      <div
+        className={`fixed -left-8 min-[369px]:-left-11 top-82 min-[369px]:top-79 min-[429px]:top-78
+                     w-23 min-[369px]:w-28 min-[429px]:w-28
+                     aspect-[229/342]
+                     z-10 pointer-events-none
+                     rotate-30
+                     animate-swing-fadeIn-l`}
+      >
+        <Image
+          src={"/images/violets.png"}
+          sizes="(min-width: 429px) 120px, (min-width: 369px) 112px, 96px"
+          priority
+          fill
+          alt="violets"
+        />
+      </div>
+      <div
+        className={`fixed -right-10 -bottom-10
+                     w-27 min-[369px]:w-30
+                     aspect-square
+                     z-10 pointer-events-none
+                     animate-swing-fadeIn-r`}
+      >
+        <Image src={"/images/blue-flower.png"} sizes="(min-width: 369px) 88px, 80px" priority fill alt="blue-flower" />
+      </div>
+
+      {["rose", "daisy", "lily", "sunflower", "tulip"].map(f => (
+        <Image key={f} src={`/images/flowers/${f}.png`} sizes="300px" fill priority alt={f} className="hidden" />
+      ))}
+    </div>
+  )
+}
+
+export default ImagesPreload

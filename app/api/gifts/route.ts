@@ -2,7 +2,7 @@ import { verifySession } from "@/lib/api/utils/verifySession"
 import { randomUUID } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { giftsCollection } from "../../../db"
+import { giftsCollection } from "../../lib/db"
 
 export async function GET(req: NextRequest) {
   try {

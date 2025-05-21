@@ -3,12 +3,11 @@ import { randomUUID } from "crypto"
 import jwt from "jsonwebtoken"
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { usersCollection } from "../../../db"
-
-const { HOST, JWT_SECRET } = process.env
+import { usersCollection } from "../../lib/db"
 
 export async function POST(req: NextRequest) {
-  if (!(HOST && JWT_SECRET)) throw new Error("CredentialsNotConfigured")
+  const { NEXT_PUBLIC_HOST, JWT_SECRET } = process.env
+  if (!(NEXT_PUBLIC_HOST && JWT_SECRET)) throw new Error("LoginCredentialsNotConfigured")
 
   try {
     const { message, signature, nonce } = z
@@ -28,7 +27,7 @@ export async function POST(req: NextRequest) {
       message,
       signature: signature as `0x${string}`,
       nonce,
-      domain: HOST,
+      domain: NEXT_PUBLIC_HOST,
     })
 
     if (isError || !success) throw new Error("VerifySignInMessageError")

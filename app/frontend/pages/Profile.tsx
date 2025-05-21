@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
 
 import clsx from "clsx"
-import { GiftsCollection } from "../../../db"
+import { GiftsCollection } from "../../lib/db"
 import Button from "../components/Button"
 
 const Profile = () => {
@@ -30,9 +30,7 @@ const Profile = () => {
           "overflow-hidden",
         )}
       >
-        <div className={clsx("bg-[var(--accent)]", "text-lg min-[420px]:text-xl text-center", "pb-1.5")}>
-          received gifts
-        </div>
+        <div className={clsx("bg-[var(--accent)]", "text-lg min-[420px]:text-xl text-center", "pb-1.5")}>received gifts</div>
         <div
           className={clsx(
             "flex flex-wrap justify-between",

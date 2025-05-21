@@ -2,7 +2,7 @@ import { parseWebhookEvent, ParseWebhookEvent, verifyAppKeyWithNeynar } from "@f
 import axios from "axios"
 import { randomUUID } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
-import { usersCollection } from "../../../db"
+import { usersCollection } from "../../lib/db"
 
 export async function POST(req: NextRequest) {
   try {

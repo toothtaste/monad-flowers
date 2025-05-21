@@ -2,7 +2,7 @@ import { UserContext } from "@farcaster/frame-core/dist/context"
 import { MongoClient } from "mongodb"
 
 const { MONGODB_URI } = process.env
-if (!MONGODB_URI) throw new Error("No MONGODB_URI")
+if (!MONGODB_URI) throw new Error("MongoDBNotConfigured")
 
 export const client = new MongoClient(MONGODB_URI)
 await client.connect()
@@ -28,8 +28,8 @@ export type GiftsCollection = {
 
 export const db = client.db("main")
 
-export const usersCollection = db.collection<
-  UserContext & DatabaseFields & { notificationToken?: string; lastLogged: Date }
->("users")
+export const usersCollection = db.collection<UserContext & DatabaseFields & { notificationToken?: string; lastLogged: Date }>(
+  "users",
+)
 
 export const giftsCollection = db.collection<GiftsCollection & DatabaseFields>("gifts")

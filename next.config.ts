@@ -1,8 +1,10 @@
 import type { NextConfig } from "next"
 
+const { NEXT_PUBLIC_HOST } = process.env
+if (!NEXT_PUBLIC_HOST) throw new Error("NextConfigCredentialsNotConfigured")
+
 const nextConfig: NextConfig = {
-  /* config options here */
-  allowedDevOrigins: ["purchase-street-concerned-injection.trycloudflare.com", "/_next/*"],
+  allowedDevOrigins: [NEXT_PUBLIC_HOST],
   images: {
     remotePatterns: [
       {

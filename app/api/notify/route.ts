@@ -2,9 +2,12 @@ import axios from "axios"
 import { randomUUID } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { usersCollection } from "../../../db"
+import { usersCollection } from "../../lib/db"
 
 export async function POST(req: NextRequest) {
+  const { JWT_SECRET } = process.env
+  if (!JWT_SECRET) throw new Error("NotifyCredentialsNotConfigured")
+
   try {
     const { secret, title, body } = z
       .object({
@@ -14,7 +17,7 @@ export async function POST(req: NextRequest) {
       })
       .parse(await req.json())
 
-    if (secret !== process.env.JWT_SECRET!) throw new Error("NotifyAccessDenied")
+    if (secret !== JWT_SECRET) throw new Error("NotifyAccessDenied")
 
     const notificationTokens = (
       await usersCollection
@@ -37,10 +40,7 @@ export async function POST(req: NextRequest) {
 
       if (invalidTokens.length) {
         console.log("invalidTokens", invalidTokens)
-        await usersCollection.updateMany(
-          { notificationToken: { $in: invalidTokens } },
-          { $unset: { notificationToken: "" } },
-        )
+        await usersCollection.updateMany({ notificationToken: { $in: invalidTokens } }, { $unset: { notificationToken: "" } })
       }
     }
 
