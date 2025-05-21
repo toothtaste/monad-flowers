@@ -8,7 +8,7 @@ import { useAccount, useConnect } from "wagmi"
 import Button from "../components/Button"
 
 export default function Home() {
-  const { isConnected, address } = useAccount()
+  const { isConnected } = useAccount()
   const { connect, connectors } = useConnect()
 
   useEffect(() => {
@@ -48,10 +48,7 @@ export default function Home() {
           "leading-6",
         )}
       >
-        <p>
-          Select a&nbsp;flower you&rsquo;d like to&nbsp;gift, choose a&nbsp;recipient, and pay for everything with test MON
-          tokens.
-        </p>
+        <p>Select a&nbsp;flower you&rsquo;d like to&nbsp;gift, choose a&nbsp;recipient, and pay for everything with test MON tokens.</p>
         <p>Check out the gifts you&rsquo;ve received in&nbsp;your profile at&nbsp;the top right corner.</p>
         <p>The delivery is&nbsp;fast and cheap&nbsp;&mdash; I&nbsp;promise!</p>
       </div>
