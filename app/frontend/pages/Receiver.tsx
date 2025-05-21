@@ -37,9 +37,11 @@ const Receiver = () => {
 
       if (!fids) return
 
-      const following = await fetch(`/api/following?fids=${fids}`).then(res => res.json())
+      const following = (await fetch(`/api/following?fids=${fids}`).then(res => res.json())) as UserData[]
 
-      updateStore(prev => ({ follows: [...prev.follows, ...following] }))
+      updateStore(prev => ({
+        follows: [...prev.follows, ...following.sort((a, b) => a.username.localeCompare(b.username))],
+      }))
     }
 
     main()
