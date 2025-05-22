@@ -11,6 +11,7 @@ import { useNavigate } from "react-router"
 import { monadTestnet } from "viem/chains"
 import { useChainId, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
 import Button from "../components/Button"
+import Warning from "../components/Warning"
 
 const Receiver = () => {
   const { session, user, receiver, follows } = store()
@@ -172,6 +173,8 @@ const Receiver = () => {
           navigate(`/result`)
         }}
       />
+
+      <Warning />
     </main>
   )
 }
