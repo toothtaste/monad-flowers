@@ -9,7 +9,7 @@ import clsx from "clsx"
 import { Suspense, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router"
 import { monadTestnet } from "viem/chains"
-import { useChainId, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
+import { useAccount, useChainId, useConnect, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
 import Button from "../components/Button"
 import Warning from "../components/Warning"
 
@@ -72,6 +72,8 @@ const Receiver = () => {
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ chainId: monadTestnet.id, hash })
   const { switchChainAsync, switchChain } = useSwitchChain()
   const chainId = useChainId()
+  const { isConnected, address } = useAccount()
+  const { connectAsync, connectors } = useConnect()
 
   const { mutateAsync: giftMutateAsync } = useMutation({
     mutationFn: async (flower: "daisy" | "lily" | "rose" | "sunflower" | "tulip") =>
@@ -155,6 +157,10 @@ const Receiver = () => {
           const { flower } = store.getState()
 
           // if (chainId !== monadTestnet.id)
+
+          try {
+            await connectAsync({ connector: connectors[0] })
+          } catch (error) {}
 
           try {
             await switchChainAsync({ chainId: monadTestnet.id })
