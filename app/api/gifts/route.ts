@@ -1,8 +1,9 @@
 import { verifySession } from "@/lib/api/utils/verifySession"
+import axios from "axios"
 import { randomUUID } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-import { giftsCollection } from "../../lib/db"
+import { giftsCollection, usersCollection } from "../../lib/db"
 
 export async function GET(req: NextRequest) {
   try {
@@ -19,6 +20,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const { NEYNAR_API_KEY } = process.env
+  if (!NEYNAR_API_KEY) throw new Error("NeynarNotConfigured")
+
   try {
     const { session, receiverFid, flower } = z
       .object({
@@ -30,14 +34,14 @@ export async function POST(req: NextRequest) {
 
     const { fid } = verifySession(session)
 
-    const { messages } = await fetch(
-      `https://hub.pinata.cloud/v1/userDataByFid?fid=${fid}&user_data_type=USER_DATA_TYPE_USERNAME`,
-      {
-        method: "GET",
-      },
+    const options = { method: "GET", headers: { "x-api-key": NEYNAR_API_KEY } }
+
+    const userData = await fetch(
+      `https://hub-api.neynar.com/v1/userDataByFid?fid=${fid}&user_data_type=USER_DATA_TYPE_USERNAME`,
+      options,
     ).then(res => res.json())
 
-    const username = messages[0]?.data?.userDataBody?.value
+    const username = userData?.data?.userDataBody?.value
 
     if (!username) throw new Error("UsernameNotFetched")
 
@@ -93,6 +97,16 @@ export async function POST(req: NextRequest) {
         )
       }
     }
+
+    const user = await usersCollection.findOne({ fid })
+
+    axios.post("https://api.warpcast.com/v1/frame-notifications", {
+      notificationId: randomUUID(),
+      title: "You received a gift!",
+      body: `@${username} sent you a ${flower}`,
+      targetUrl: "https://monad-flowers.xyz",
+      tokens: [user?.notificationToken],
+    })
 
     return NextResponse.json({ success: true })
   } catch (err) {

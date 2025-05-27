@@ -11,9 +11,11 @@ export async function GET(req: NextRequest) {
 
     const options = { method: "GET", headers: { "x-api-key": NEYNAR_API_KEY } }
 
-    const { messages } = await fetch(`https://hub-api.neynar.com/v1/linksByFid?fid=${fid}`, options).then(res => res.json())
+    const { users } = await fetch(`https://api.neynar.com/v2/farcaster/following?fid=${fid}`, options).then(res => res.json())
 
-    return NextResponse.json(messages)
+    console.log(users.length)
+
+    return NextResponse.json(users)
   } catch (err) {
     console.error(err)
     return new NextResponse("Internal Server Error", { status: 500 })

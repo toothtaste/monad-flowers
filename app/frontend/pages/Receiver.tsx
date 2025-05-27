@@ -6,72 +6,37 @@ import { UserData } from "@/lib/store/types"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import clsx from "clsx"
-import { Suspense, useEffect, useRef, useState } from "react"
+import { Suspense, useEffect } from "react"
 import { useNavigate } from "react-router"
 import { monadTestnet } from "viem/chains"
-import { useAccount, useChainId, useConnect, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
+import { useConnect, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
 import Button from "../components/Button"
 
 const Receiver = () => {
   const { session, user, receiver, follows } = store()
 
-  const bottomRef = useRef<HTMLDivElement | null>(null)
-
-  const { data: links, isLoading } = useQuery({
-    queryKey: ["linksByFid", user?.fid],
-    queryFn: () => fetch(`/api/linksByFid?fid=${user?.fid}`).then(res => res.json()),
-    enabled: !!user?.fid,
+  const { data, isLoading } = useQuery<{ object: string; user: UserData }[]>({
+    queryKey: ["follows", user?.fid],
+    queryFn: () => fetch(`/api/follows?fid=${user?.fid}`).then(res => res.json()),
+    enabled: !!user?.fid && !follows?.length,
   })
 
-  const [page, setPage] = useState(Math.floor(follows?.length / 10))
-
   useEffect(() => {
-    async function main() {
-      if (!links?.length) return
-      if (follows?.length >= links.length) return
+    if (!data || follows.length) return
 
-      const fids = links
-        .slice(page * 10, page * 10 + 10)
-        .map((link: any) => link.data.linkBody.targetFid)
-        .join(",")
-
-      if (!fids) return
-
-      const following = (await fetch(`/api/following?fids=${fids}`).then(res => res.json())) as UserData[]
-
-      updateStore(prev => ({
-        follows: [...prev.follows, ...following.sort((a, b) => a.username.localeCompare(b.username))],
-      }))
-    }
-
-    main()
-
-    return () => {}
-  }, [links?.length, page])
-
-  useEffect(() => {
-    if (!bottomRef.current) return
-    if (follows?.length >= links?.length) return
-
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        if (page * 10 >= links.length) return observer.disconnect()
-        setPage(prev => prev + 1)
-      }
+    updateStore({
+      follows: data
+        .slice()
+        .map(val => val.user)
+        .sort((a, b) => a.username.toLowerCase().localeCompare(b.username.toLowerCase())),
     })
-
-    observer.observe(bottomRef.current)
-
-    return () => observer.disconnect()
-  }, [bottomRef.current])
+  }, [data])
 
   const navigate = useNavigate()
 
   const { data: hash, isPending, writeContractAsync } = useWriteContract()
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ chainId: monadTestnet.id, hash })
-  const { switchChainAsync, switchChain } = useSwitchChain()
-  const chainId = useChainId()
-  const { isConnected, address } = useAccount()
+  const { switchChainAsync } = useSwitchChain()
   const { connectAsync, connectors } = useConnect()
 
   const { mutateAsync: giftMutateAsync } = useMutation({
@@ -142,8 +107,6 @@ const Receiver = () => {
                 <div>{user.username}</div>
               </div>
             ))}
-
-          {links?.length && <div ref={bottomRef} className="h-[1px]" />}
         </div>
       </div>
 
@@ -154,8 +117,6 @@ const Receiver = () => {
           if (!receiver) return
 
           const { flower } = store.getState()
-
-          // if (chainId !== monadTestnet.id)
 
           try {
             await connectAsync({ connector: connectors[0] })
@@ -178,8 +139,6 @@ const Receiver = () => {
           navigate(`/result`)
         }}
       />
-
-      {/* <Warning /> */}
     </main>
   )
 }
