@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "rm -r ./.next && clear && next dev --turbopack",
+    "dev": "rm -rf ./.next && clear && next dev --turbopack",
     "tunnel": "clear && cloudflared tunnel --url http://localhost:3000",
     "build": "next build",
     "start": "next start",
