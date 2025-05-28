@@ -5,8 +5,8 @@ import { z } from "zod"
 import { usersCollection } from "../../lib/db"
 
 export async function POST(req: NextRequest) {
-  const { JWT_SECRET } = process.env
-  if (!JWT_SECRET) throw new Error("NotifyCredentialsNotConfigured")
+  const { SECRET } = process.env
+  if (!SECRET) throw new Error("NotifyCredentialsNotConfigured")
 
   try {
     const { secret, title, body } = z
@@ -17,12 +17,10 @@ export async function POST(req: NextRequest) {
       })
       .parse(await req.json())
 
-    if (secret !== JWT_SECRET) throw new Error("NotifyAccessDenied")
+    if (secret !== SECRET) throw new Error("NotifyAccessDenied")
 
     const notificationTokens = (
-      await usersCollection
-        .find({ notificationToken: { $exists: true } }, { projection: { notificationToken: 1, _id: 0 } })
-        .toArray()
+      await usersCollection.find({ notificationToken: { $exists: true } }, { projection: { notificationToken: 1, _id: 0 } }).toArray()
     ).map(val => val.notificationToken)
 
     for (let i = 0; i < notificationTokens.length; i += 100) {

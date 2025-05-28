@@ -1,14 +1,13 @@
 "use client"
 
-import { generateNonce } from "@farcaster/auth-client"
 import sdk from "@farcaster/frame-sdk"
 import { farcasterFrame as miniAppConnector } from "@farcaster/frame-wagmi-connector"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import axios from "axios"
 import { useEffect } from "react"
 import { http } from "viem"
 import { monadTestnet } from "viem/chains"
 import { createConfig, WagmiProvider } from "wagmi"
+import { login } from "../api/login"
 import { updateStore } from "../store"
 
 const wagmiConfig = createConfig({
@@ -32,17 +31,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
       updateStore({ user, client })
 
-      const nonce = generateNonce()
-
       await sdk.actions.ready({ disableNativeGestures: true })
 
       try {
-        const { message, signature } = await sdk.actions.signIn({ nonce })
-
-        const {
-          data: { session },
-        } = await axios.post("/api/login", { message, signature, nonce })
-
+        const { token: session } = await sdk.experimental.quickAuth()
+        await login({ session })
         updateStore({ session })
       } catch (error) {
         await sdk.actions.close()

@@ -1,3 +1,4 @@
+import { User } from "@/lib/api/types"
 import { verifySession } from "@/lib/api/utils/verifySession"
 import axios from "axios"
 import { randomUUID } from "crypto"
@@ -32,16 +33,15 @@ export async function POST(req: NextRequest) {
       })
       .parse(await req.json())
 
-    const { fid } = verifySession(session)
+    const fid = verifySession(session)
 
     const options = { method: "GET", headers: { "x-api-key": NEYNAR_API_KEY } }
 
-    const userData = await fetch(
-      `https://hub-api.neynar.com/v1/userDataByFid?fid=${fid}&user_data_type=USER_DATA_TYPE_USERNAME`,
-      options,
-    ).then(res => res.json())
+    const userData: {
+      users: User[]
+    } = await fetch(`https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`, options).then(res => res.json())
 
-    const username = userData?.data?.userDataBody?.value
+    const username = userData?.users[0].username
 
     if (!username) throw new Error("UsernameNotFetched")
 
@@ -98,15 +98,17 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const user = await usersCollection.findOne({ fid })
+    const user = await usersCollection.findOne({ fid: receiverFid })
 
-    axios.post("https://api.warpcast.com/v1/frame-notifications", {
-      notificationId: randomUUID(),
-      title: "You received a gift!",
-      body: `@${username} sent you a ${flower}`,
-      targetUrl: "https://monad-flowers.xyz",
-      tokens: [user?.notificationToken],
-    })
+    if (user && user.notificationToken) {
+      axios.post("https://api.warpcast.com/v1/frame-notifications", {
+        notificationId: randomUUID(),
+        title: "You received a gift!",
+        body: `@${username} sent you a ${flower}`,
+        targetUrl: "https://monad-flowers.xyz",
+        tokens: [user.notificationToken],
+      })
+    }
 
     return NextResponse.json({ success: true })
   } catch (err) {

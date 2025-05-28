@@ -4,16 +4,16 @@ import { store } from "@/lib/store"
 import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
 
+import { getGifts } from "@/lib/api/gifts"
 import clsx from "clsx"
-import { GiftsCollection } from "../../lib/db"
 import Button from "../components/Button"
 
 const Profile = () => {
   const { user } = store()
 
-  const { data, isLoading, error } = useQuery<GiftsCollection, Error>({
+  const { data, isLoading } = useQuery({
     queryKey: ["gifts", user?.fid],
-    queryFn: () => fetch(`/api/gifts?fid=${user?.fid}`).then(res => res.json()),
+    queryFn: () => getGifts({ fid: user?.fid! }),
     enabled: !!user?.fid,
   })
 

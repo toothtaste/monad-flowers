@@ -11,11 +11,23 @@ export async function GET(req: NextRequest) {
 
     const options = { method: "GET", headers: { "x-api-key": NEYNAR_API_KEY } }
 
-    const { users } = await fetch(`https://api.neynar.com/v2/farcaster/following?fid=${fid}`, options).then(res => res.json())
+    let follows = []
 
-    console.log(users.length)
+    let data = await fetch(`https://api.neynar.com/v2/farcaster/following?fid=${fid}&limit=100`, options).then(res => res.json())
 
-    return NextResponse.json(users)
+    follows.push(...data.users)
+
+    while (data?.next?.cursor) {
+      await new Promise(res => setTimeout(res, 100))
+
+      data = await fetch(`https://api.neynar.com/v2/farcaster/following?fid=${fid}&limit=100&cursor=${data.next.cursor}`, options).then(
+        res => res.json(),
+      )
+
+      follows.push(...data.users)
+    }
+
+    return NextResponse.json(follows)
   } catch (err) {
     console.error(err)
     return new NextResponse("Internal Server Error", { status: 500 })

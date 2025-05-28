@@ -2,11 +2,13 @@
 
 import { ABI, CA, IDS_MAP } from "@/lib/constants"
 import { store, updateStore } from "@/lib/store"
-import { UserData } from "@/lib/store/types"
+
+import { User } from "@/lib/api/types"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import clsx from "clsx"
-import { Suspense, useEffect } from "react"
+import Image from "next/image"
+import { Suspense, useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 import { monadTestnet } from "viem/chains"
 import { useConnect, useSwitchChain, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
@@ -15,7 +17,7 @@ import Button from "../components/Button"
 const Receiver = () => {
   const { session, user, receiver, follows } = store()
 
-  const { data, isLoading } = useQuery<{ object: string; user: UserData }[]>({
+  const { data, isLoading } = useQuery<{ object: string; user: User }[]>({
     queryKey: ["follows", user?.fid],
     queryFn: () => fetch(`/api/follows?fid=${user?.fid}`).then(res => res.json()),
     enabled: !!user?.fid && !follows?.length,
@@ -48,6 +50,8 @@ const Receiver = () => {
       }),
   })
 
+  const [search, setSearch] = useState<string>("")
+
   return (
     <main>
       <div
@@ -65,48 +69,81 @@ const Receiver = () => {
           users you follow
         </div>
         <div className={`h-50 min-[390px]:h-65 overflow-y-scroll `}>
-          {(!follows.length || isLoading) &&
+          {follows.length && !isLoading ? (
+            <div>
+              <div className="relative">
+                <Image
+                  src={"/images/search.svg"}
+                  width={16}
+                  height={16}
+                  alt="search"
+                  className={clsx("absolute left-3.5 top-[calc(50%)] -translate-y-1/2")}
+                />
+                <input
+                  type="search"
+                  name="search"
+                  id="search"
+                  placeholder="search"
+                  className={clsx("text-white", "pt-0.5 pb-1 pl-11 pr-3", "w-full", "border-y border-y-[var(--dark-accent)]", "outline-0")}
+                  onChange={e => {
+                    setSearch(e.target.value)
+                  }}
+                />
+              </div>
+
+              {follows
+                .slice()
+                .sort((a, b) => {
+                  const aIndex = a.username.toLowerCase().indexOf(search.toLowerCase())
+                  const bIndex = b.username.toLowerCase().indexOf(search.toLowerCase())
+
+                  return (aIndex === -1 ? Infinity : aIndex) - (bIndex === -1 ? Infinity : bIndex)
+                })
+                .map((user: User, i) => (
+                  <div
+                    key={user.fid}
+                    onClick={() => {
+                      updateStore({ receiver: user })
+                    }}
+                    className={clsx(
+                      "flex items-center gap-3",
+                      "px-3 py-1.5",
+                      "border-b border-b-[var(--accent)]",
+                      "overflow-hidden",
+                      "cursor-pointer",
+                      "first:border-t first:border-t-[var(--dark-accent)]",
+                      "last:border-b-[var(--dark-accent)]",
+                      receiver?.fid === user.fid ? "text-white bg-[var(--accent)]" : "bg-white",
+                    )}
+                  >
+                    <div className="w-5 h-5">
+                      <Suspense fallback={<div className="bg-gray-200 w-5 h-5 rounded-full animate-pulse"></div>}>
+                        <img
+                          loading="lazy"
+                          src={user.pfp_url || "/images/user.svg"}
+                          sizes="20px"
+                          alt="pfp_url"
+                          onError={e => {
+                            e.currentTarget.src = "/images/user.svg"
+                          }}
+                          className="object-cover w-full h-full rounded-full mt-[1px]"
+                        />
+                      </Suspense>
+                    </div>
+                    <div>
+                      {user.username} {i}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          ) : (
             Array.from({ length: 9 }).map((_, i) => (
               <div key={i} className="flex items-center gap-3 px-3 pt-3 last:pb-3 bg-white overflow-hidden">
                 <div className="bg-gray-200 w-5 h-5 rounded-full animate-pulse"></div>
                 <div className="bg-gray-200 w-full h-4 rounded animate-pulse"></div>
               </div>
-            ))}
-          {follows &&
-            follows.map((user: UserData) => (
-              <div
-                key={user.fid}
-                onClick={() => {
-                  updateStore({ receiver: user })
-                }}
-                className={clsx(
-                  "flex items-center gap-3",
-                  "px-3 py-1.5",
-                  "border-b border-b-[var(--accent)]",
-                  "overflow-hidden",
-                  "cursor-pointer",
-                  "first:border-t first:border-t-[var(--dark-accent)]",
-                  "last:border-b-[var(--dark-accent)]",
-                  receiver?.fid === user.fid ? "text-white bg-[var(--accent)]" : "bg-white",
-                )}
-              >
-                <div className="w-5 h-5">
-                  <Suspense fallback={<div className="bg-gray-200 w-5 h-5 rounded-full animate-pulse"></div>}>
-                    <img
-                      loading="lazy"
-                      src={user.pfp_url || "/images/user.svg"}
-                      sizes="20px"
-                      alt="pfp_url"
-                      onError={e => {
-                        e.currentTarget.src = "/images/user.svg"
-                      }}
-                      className="object-cover w-full h-full rounded-full mt-[1px]"
-                    />
-                  </Suspense>
-                </div>
-                <div>{user.username}</div>
-              </div>
-            ))}
+            ))
+          )}
         </div>
       </div>
 
