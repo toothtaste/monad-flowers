@@ -1,5 +1,4 @@
 import { User } from "@/lib/api/types"
-import { verifySession } from "@/lib/api/utils/verifySession"
 import axios from "axios"
 import { randomUUID } from "crypto"
 import { NextRequest, NextResponse } from "next/server"
@@ -8,8 +7,9 @@ import { giftsCollection, usersCollection } from "../../lib/db"
 
 export async function GET(req: NextRequest) {
   try {
-    const url = new URL(req.url)
-    const fid = z.string().min(1).parse(url.searchParams.get("fid"))
+    const fid = req.headers.get("fid")
+
+    if (!fid) throw new Error("NoFID")
 
     const gifts = await giftsCollection.findOne({ fid: parseInt(fid) })
 
@@ -25,25 +25,22 @@ export async function POST(req: NextRequest) {
   if (!NEYNAR_API_KEY) throw new Error("NeynarNotConfigured")
 
   try {
-    const { session, receiverFid, flower } = z
+    const { receiverFid, flower } = z
       .object({
-        session: z.string(),
         receiverFid: z.number(),
         flower: z.enum(["rose", "tulip", "daisy", "sunflower", "lily"]),
       })
       .parse(await req.json())
 
-    const fid = await verifySession(session)
+    const fid = req.headers.get("fid")
 
-    console.log(fid)
+    if (!fid) throw new Error("NoFID")
 
     const options = { method: "GET", headers: { "x-api-key": NEYNAR_API_KEY } }
 
     const userData: {
       users: User[]
     } = await fetch(`https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`, options).then(res => res.json())
-
-    console.log(userData)
 
     const username = userData?.users[0].username
 

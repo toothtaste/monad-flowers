@@ -11,9 +11,11 @@ const Result = () => {
   const { receiver } = store()
 
   const btnClick = async () => {
+    const { flower } = store.getState()
+
     await sdk.actions.composeCast({
       text: [`Hey, @${receiver?.username}! 🌼👋`, "My little flower gift is waiting for you — check it out:"].join("\n\n"),
-      embeds: ["https://warpcast.com/miniapps/KxLyvVqyb3-v/monad-flowers"],
+      embeds: [`/api/share?flower=${flower}&receiver=${receiver?.fid}`],
     })
   }
 

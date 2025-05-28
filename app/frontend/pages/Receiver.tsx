@@ -3,9 +3,11 @@
 import { ABI, CA, IDS_MAP } from "@/lib/constants"
 import { store, updateStore } from "@/lib/store"
 
+import fetchFollows from "@/lib/api/follows"
+import { postGifts } from "@/lib/api/gifts"
 import { User } from "@/lib/api/types"
+import { Flower } from "@/lib/store/types"
 import { useMutation, useQuery } from "@tanstack/react-query"
-import axios from "axios"
 import clsx from "clsx"
 import Image from "next/image"
 import { Suspense, useEffect, useState } from "react"
@@ -15,16 +17,18 @@ import { useConnect, useSwitchChain, useWaitForTransactionReceipt, useWriteContr
 import Button from "../components/Button"
 
 const Receiver = () => {
-  const { session, user, receiver, follows } = store()
+  const { user, receiver, follows } = store()
 
   const { data, isLoading } = useQuery<{ object: string; user: User }[]>({
     queryKey: ["follows", user?.fid],
-    queryFn: () => fetch(`/api/follows?fid=${user?.fid}`).then(res => res.json()),
+    queryFn: () => fetchFollows(),
     enabled: !!user?.fid && !follows?.length,
   })
 
   useEffect(() => {
     if (!data || follows.length) return
+
+    console.log(data)
 
     updateStore({
       follows: data
@@ -42,10 +46,9 @@ const Receiver = () => {
   const { connectAsync, connectors } = useConnect()
 
   const { mutateAsync: giftMutateAsync } = useMutation({
-    mutationFn: async (flower: "daisy" | "lily" | "rose" | "sunflower" | "tulip") =>
-      axios.post("/api/gifts", {
-        session,
-        receiverFid: receiver?.fid,
+    mutationFn: async (flower: Flower) =>
+      postGifts({
+        receiverFid: receiver?.fid!,
         flower,
       }),
   })
@@ -99,7 +102,7 @@ const Receiver = () => {
 
                   return (aIndex === -1 ? Infinity : aIndex) - (bIndex === -1 ? Infinity : bIndex)
                 })
-                .map((user: User, i) => (
+                .map((user: User) => (
                   <div
                     key={user.fid}
                     onClick={() => {
@@ -130,9 +133,7 @@ const Receiver = () => {
                         />
                       </Suspense>
                     </div>
-                    <div>
-                      {user.username} {i}
-                    </div>
+                    <div>{user.username}</div>
                   </div>
                 ))}
             </div>

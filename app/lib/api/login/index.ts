@@ -1,11 +1,7 @@
+import axiosInstance from "../config"
+
 function login({ session }: { session: string }) {
-  return fetch("/api/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ session }),
-  }).then(res => res.json())
+  return axiosInstance.post("/api/login", { session }).then(res => res.data)
 }
 
 export { login }

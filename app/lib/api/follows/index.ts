@@ -1,8 +1,6 @@
-import { Next, User } from "../types"
+import axiosInstance from "../config"
+import { User } from "../types"
 
-export default function fetchFollows({ fid, page }: { fid: number; page: string }): Promise<{
-  users: { object: string; user: User }[]
-  next: Next
-}> {
-  return fetch(`/api/follows?fid=${fid}&cursor=${page}`).then(res => res.json())
+export default function fetchFollows(): Promise<{ object: string; user: User }[]> {
+  return axiosInstance.get(`/api/follows`).then(res => res.data)
 }

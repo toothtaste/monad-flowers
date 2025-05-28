@@ -35,8 +35,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
       try {
         const { token: session } = await sdk.experimental.quickAuth()
-        await login({ session })
         updateStore({ session })
+        await login({ session })
       } catch (error) {
         await sdk.actions.close()
       }

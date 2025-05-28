@@ -4,8 +4,6 @@ import { EMOJIES_MAP } from "@/lib/constants"
 import { store, updateStore } from "@/lib/store"
 import clsx from "clsx"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
 import { monadTestnet } from "viem/chains"
 import { useSwitchChain } from "wagmi"
 import Button from "../components/Button"
@@ -14,12 +12,6 @@ const Flowers = () => {
   const { flower } = store()
 
   const { switchChain } = useSwitchChain()
-
-  const navigate = useRouter()
-
-  useEffect(() => {
-    navigate.prefetch("/receiver")
-  }, [])
 
   return (
     <main>

@@ -7,9 +7,8 @@ export async function POST(req: NextRequest) {
   const { NEXT_PUBLIC_HOST } = process.env
   if (!NEXT_PUBLIC_HOST) throw new Error("LoginCredentialsNotConfigured")
 
+  // keep it in body
   const { session } = await req.json()
-
-  console.log(session)
 
   try {
     const fid = await verifySession(session)

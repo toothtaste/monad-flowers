@@ -13,7 +13,7 @@ const Profile = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["gifts", user?.fid],
-    queryFn: () => getGifts({ fid: user?.fid! }),
+    queryFn: () => getGifts(),
     enabled: !!user?.fid,
   })
 
