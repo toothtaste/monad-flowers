@@ -4,12 +4,14 @@ import { NextRequest, NextResponse } from "next/server"
 import { usersCollection } from "../../lib/db"
 
 export async function POST(req: NextRequest) {
-  const { NEXT_PUBLIC_HOST, JWT_SECRET } = process.env
-  if (!(NEXT_PUBLIC_HOST && JWT_SECRET)) throw new Error("LoginCredentialsNotConfigured")
+  const { NEXT_PUBLIC_HOST } = process.env
+  if (!NEXT_PUBLIC_HOST) throw new Error("LoginCredentialsNotConfigured")
+
+  const { session } = await req.json()
+
+  console.log(session)
 
   try {
-    const { session } = await req.json()
-
     const fid = await verifySession(session)
 
     const user = await usersCollection.findOne({ fid })

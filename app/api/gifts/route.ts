@@ -33,13 +33,17 @@ export async function POST(req: NextRequest) {
       })
       .parse(await req.json())
 
-    const fid = verifySession(session)
+    const fid = await verifySession(session)
+
+    console.log(fid)
 
     const options = { method: "GET", headers: { "x-api-key": NEYNAR_API_KEY } }
 
     const userData: {
       users: User[]
     } = await fetch(`https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`, options).then(res => res.json())
+
+    console.log(userData)
 
     const username = userData?.users[0].username
 
