@@ -13,7 +13,8 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   if (pathname.startsWith("/api")) {
-    if (["/api/login", "/api/clientError", "/api/og", "/api/webhook", "/api/notify"].includes(pathname)) return NextResponse.next()
+    if (["/api/login", "/api/rpc", "/api/clientError", "/api/og", "/api/webhook", "/api/notify"].includes(pathname))
+      return NextResponse.next()
 
     const authHeader = request.headers.get("authorization")
 
