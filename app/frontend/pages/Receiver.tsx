@@ -28,8 +28,6 @@ const Receiver = () => {
   useEffect(() => {
     if (!data || follows.length) return
 
-    console.log(data)
-
     updateStore({
       follows: data
         .slice()
