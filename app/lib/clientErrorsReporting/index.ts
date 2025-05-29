@@ -1,8 +1,8 @@
-import axios from "axios"
+import axiosInstance from "../api/config"
 
 export default function clientErrorHandling() {
   function reportClientError(params: any) {
-    axios.post("/api/clientError", params)
+    axiosInstance.post("/api/clientError", params)
   }
 
   window.onerror = (message, source, lineno, colno, error) =>

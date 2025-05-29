@@ -41,7 +41,7 @@ const offsets = {
 
 export async function GET(req: NextRequest) {
   const { NEXT_PUBLIC_HOST } = process.env
-  if (!NEXT_PUBLIC_HOST) throw new Error("LoginCredentialsNotConfigured")
+  if (!NEXT_PUBLIC_HOST) throw new Error("OGCredentialsNotConfigured")
 
   const { searchParams } = new URL(req.url)
 
@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
             height: "400px",
             position: "absolute",
             top: "-4%",
-            left: "22%",
+            left: "20%",
           }}
         >
           <img style={{}} height={400} src={`https://${NEXT_PUBLIC_HOST}/manifest/table.svg`} />
