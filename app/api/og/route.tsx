@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
             height: "400px",
             position: "absolute",
             top: "-4%",
-            left: "20%",
+            left: "21%",
           }}
         >
           <img style={{}} height={400} src={`https://${NEXT_PUBLIC_HOST}/manifest/table.svg`} />

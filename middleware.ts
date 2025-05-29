@@ -53,7 +53,7 @@ export async function middleware(request: NextRequest) {
 
       const imageUrl =
         flower && Object.values(Flower).includes(flower as Flower)
-          ? `https://${NEXT_PUBLIC_HOST}/api/og?flower=${flower}`
+          ? `https://${NEXT_PUBLIC_HOST}/manifest/og/${flower}.jpg`
           : `https://${NEXT_PUBLIC_HOST}/manifest/heroImage.png`
 
       const frame = {
