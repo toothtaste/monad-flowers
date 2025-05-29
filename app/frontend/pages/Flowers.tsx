@@ -34,7 +34,6 @@ const Flowers = () => {
             const clicked = (e.target as HTMLElement)?.textContent
 
             if (!clicked) return
-
             if (!EMOJIES_MAP[clicked]) return
 
             updateStore({ flower: EMOJIES_MAP[clicked] })
