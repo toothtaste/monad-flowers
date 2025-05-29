@@ -7,6 +7,9 @@ import clsx from "clsx"
 import { useEffect, useRef } from "react"
 import Button from "../components/Button"
 
+const { NEXT_PUBLIC_HOST } = process.env
+if (!NEXT_PUBLIC_HOST) throw new Error("LoginCredentialsNotConfigured")
+
 const Result = () => {
   const { receiver } = store()
 
@@ -15,7 +18,7 @@ const Result = () => {
 
     await sdk.actions.composeCast({
       text: [`Hey, @${receiver?.username}! 🌼👋`, "My little flower gift is waiting for you — check it out:"].join("\n\n"),
-      embeds: [`/api/share?flower=${flower}&receiver=${receiver?.fid}`],
+      embeds: [`https://${NEXT_PUBLIC_HOST}/profile?flower=${flower}`],
     })
   }
 

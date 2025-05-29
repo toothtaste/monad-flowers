@@ -1,4 +1,5 @@
 import { verifySession } from "@/lib/api/utils/verifySession"
+import { Flower } from "@/lib/store/types"
 import { NextRequest, NextResponse } from "next/server"
 
 const { NEXT_PUBLIC_HOST } = process.env
@@ -9,15 +10,10 @@ export const config = {
 }
 
 export async function middleware(request: NextRequest) {
-  const userAgent = request.headers.get("user-agent")?.toLowerCase() || ""
-
-  const url = request.nextUrl
-  const title = url.searchParams.get("title")
-
   const { pathname } = request.nextUrl
 
   if (pathname.startsWith("/api")) {
-    if (pathname === "/api/login" || pathname === "/api/clientError") return NextResponse.next()
+    if (["/api/login", "/api/clientError", "/api/og", "/api/webhook", "/api/notify"].includes(pathname)) return NextResponse.next()
 
     const authHeader = request.headers.get("authorization")
 
@@ -45,10 +41,24 @@ export async function middleware(request: NextRequest) {
   }
 
   if (pathname.startsWith("/profile")) {
+    const userAgent = request.headers.get("user-agent")?.toLowerCase() || ""
+
     if (userAgent.includes("fcbot")) {
+      console.log("catch fcbot")
+
+      const { searchParams } = request.nextUrl
+
+      // const username = searchParams.get("username")
+      const flower = searchParams.get("flower")
+
+      const imageUrl =
+        flower && Object.values(Flower).includes(flower as Flower)
+          ? `https://${NEXT_PUBLIC_HOST}/api/og?flower=${flower}`
+          : `https://${NEXT_PUBLIC_HOST}/manifest/heroImage.png`
+
       const frame = {
         version: "next",
-        imageUrl: `https://${NEXT_PUBLIC_HOST}/api/og?title=${title}`,
+        imageUrl,
         button: {
           title: "gift",
           action: {
