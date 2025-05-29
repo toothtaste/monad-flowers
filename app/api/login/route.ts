@@ -4,9 +4,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { usersCollection } from "../../lib/db"
 
 export async function POST(req: NextRequest) {
-  const { NEXT_PUBLIC_HOST } = process.env
-  if (!NEXT_PUBLIC_HOST) throw new Error("LoginCredentialsNotConfigured")
-
   // keep it in body
   const { session } = await req.json()
 
