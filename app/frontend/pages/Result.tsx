@@ -74,7 +74,6 @@ const Result = () => {
         )}
       >
         <p>{`@${receiver?.username} has received your gift!`}</p>
-
         <button className={clsx("text-white text-base", "bg-[var(--accent)]", "px-2.5 pt-1 pb-[5px]", "rounded-xl")} onClick={btnClick}>
           share
         </button>
