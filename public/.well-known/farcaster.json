@@ -11,8 +11,8 @@
     "iconUrl": "https://monad-flowers.xyz/manifest/icon.png",
     "splashImageUrl": "https://monad-flowers.xyz/manifest/splashImage.png",
     "splashBackgroundColor": "#ffffff",
-    "subtitle": "Gift flowers on Monad",
-    "description": "Gift flowers on Monad",
+    "subtitle": "Send love onchain",
+    "description": "Send love onchain",
     "screenshotUrls": [
       "https://monad-flowers.xyz/manifest/screenshots/1.png",
       "https://monad-flowers.xyz/manifest/screenshots/2.png",
@@ -21,9 +21,9 @@
     "primaryCategory": "entertainment",
     "tags": ["flowers", "monad", "gift", "fun", "nft"],
     "heroImageUrl": "https://monad-flowers.xyz/manifest/heroImage.png",
-    "tagline": "Gift flowers on Monad",
-    "ogTitle": "Gift flowers on Monad",
-    "ogDescription": "Gift flowers on Monad",
+    "tagline": "Send love onchain",
+    "ogTitle": "Send love onchain",
+    "ogDescription": "Send love onchain",
     "ogImageUrl": "https://monad-flowers.xyz/manifest/heroImage.png",
     "webhookUrl": "https://monad-flowers.xyz/api/webhook"
   }
