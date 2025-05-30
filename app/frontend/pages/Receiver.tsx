@@ -7,6 +7,7 @@ import fetchFollows from "@/lib/api/follows"
 import { postGifts } from "@/lib/api/gifts"
 import { User } from "@/lib/api/types"
 import { Flower } from "@/lib/store/types"
+import sdk from "@farcaster/frame-sdk"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import clsx from "clsx"
 import Image from "next/image"
@@ -85,7 +86,18 @@ const Receiver = () => {
                   name="search"
                   id="search"
                   placeholder="search"
-                  className={clsx("text-white", "pt-0.5 pb-1 pl-11 pr-3", "w-full", "border-y border-y-[var(--dark-accent)]", "outline-0")}
+                  role="searchbox"
+                  className={clsx(
+                    "text-white",
+                    "pt-0.5 pb-1 pl-11 pr-3",
+                    "w-full",
+                    "border-y border-y-[var(--dark-accent)]",
+                    "outline-0",
+                    "focus:outline-none",
+                  )}
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck={false}
                   onChange={e => {
                     setSearch(e.target.value)
                   }}
@@ -107,7 +119,7 @@ const Receiver = () => {
                       updateStore({ receiver: user })
                     }}
                     className={clsx(
-                      "flex items-center gap-3",
+                      "flex justify-between items-center",
                       "px-3 py-1.5",
                       "border-b border-b-[var(--accent)]",
                       "overflow-hidden",
@@ -117,21 +129,33 @@ const Receiver = () => {
                       receiver?.fid === user.fid ? "text-white bg-[var(--accent)]" : "bg-white",
                     )}
                   >
-                    <div className="w-5 h-5">
-                      <Suspense fallback={<div className="bg-gray-200 w-5 h-5 rounded-full animate-pulse"></div>}>
-                        <img
-                          loading="lazy"
-                          src={user.pfp_url || "/images/user.svg"}
-                          sizes="20px"
-                          alt="pfp_url"
-                          onError={e => {
-                            e.currentTarget.src = "/images/user.svg"
-                          }}
-                          className="object-cover w-full h-full rounded-full mt-[1px]"
-                        />
-                      </Suspense>
+                    <div className={clsx("flex items-center gap-3")}>
+                      <div className="w-5 h-5">
+                        <Suspense fallback={<div className="bg-gray-200 w-5 h-5 rounded-full animate-pulse"></div>}>
+                          <img
+                            loading="lazy"
+                            src={user.pfp_url || "/images/user.svg"}
+                            sizes="20px"
+                            alt="pfp_url"
+                            onError={e => {
+                              e.currentTarget.src = "/images/user.svg"
+                            }}
+                            className="object-cover w-full h-full rounded-full mt-[1px]"
+                          />
+                        </Suspense>
+                      </div>
+                      <div>{user.username}</div>
                     </div>
-                    <div>{user.username}</div>
+
+                    <div
+                      className={clsx("w-4 h-4")}
+                      onClick={e => {
+                        e.stopPropagation()
+                        sdk.actions.viewProfile({ fid: user.fid })
+                      }}
+                    >
+                      <Image src={`/images/farcaster.svg`} alt="farcaster" width={16} height={16} />
+                    </div>
                   </div>
                 ))}
             </div>
