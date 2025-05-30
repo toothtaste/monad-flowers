@@ -45,8 +45,6 @@ export async function middleware(request: NextRequest) {
     const userAgent = request.headers.get("user-agent")?.toLowerCase() || ""
 
     if (userAgent.includes("fcbot")) {
-      console.log("catch fcbot")
-
       const { searchParams } = request.nextUrl
 
       // const username = searchParams.get("username")

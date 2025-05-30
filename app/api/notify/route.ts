@@ -23,7 +23,9 @@ export async function POST(req: NextRequest) {
       await usersCollection.find({ notificationToken: { $exists: true } }, { projection: { notificationToken: 1, _id: 0 } }).toArray()
     ).map(val => val.notificationToken)
 
-    for (let i = 0; i < notificationTokens.length; i += 100) {
+    if (!notificationTokens) throw new Error("NoNotificationTokens")
+
+    for (let i = 0; i < notificationTokens?.length; i += 100) {
       const {
         data: { successfulTokens, invalidTokens, rateLimitedTokens },
       } = await axios.post("https://api.warpcast.com/v1/frame-notifications", {
@@ -31,12 +33,12 @@ export async function POST(req: NextRequest) {
         title,
         body,
         targetUrl: "https://monad-flowers.xyz",
-        tokens: notificationTokens.slice(i, i + 100),
+        tokens: notificationTokens?.slice(i, i + 100),
       })
 
-      if (rateLimitedTokens.length) console.log("rateLimitedTokens", rateLimitedTokens)
+      if (rateLimitedTokens?.length) console.log("rateLimitedTokens", rateLimitedTokens)
 
-      if (invalidTokens.length) {
+      if (invalidTokens?.length) {
         console.log("invalidTokens", invalidTokens)
         await usersCollection.updateMany({ notificationToken: { $in: invalidTokens } }, { $unset: { notificationToken: "" } })
       }

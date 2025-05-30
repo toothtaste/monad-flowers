@@ -13,7 +13,7 @@ import { updateStore } from "../store"
 const wagmiConfig = createConfig({
   chains: [monadTestnet],
   transports: {
-    [monadTestnet.id]: http(`https://${process.env.NEXT_PUBLIC_HOST}/api/rpc`),
+    [monadTestnet.id]: http(`https://monad-testnet.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`),
   },
   connectors: [miniAppConnector()],
 })
