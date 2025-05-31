@@ -27,7 +27,7 @@ const Flowers = () => {
         )}
       >
         <div className={clsx("flex justify-center w-full bg-white", "pt-7 pb-5.5")}>
-          <div className={clsx("relative", "aspect-[144/180]", "w-36", "min-[370px]:w-40")}>
+          <div className={clsx("relative", "aspect-[144/180]", "w-40", "min-[370px]:w-48")}>
             <Image src={`/images/flowers/${flower}.png`} sizes="300px" fill priority alt={flower} />
           </div>
         </div>
