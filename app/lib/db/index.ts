@@ -14,22 +14,31 @@ type DatabaseFields = {
 
 export type GiftsCollection = {
   fid: number
-  receivedGifts: {
+  // receivedGifts: {
+  //   sender: string
+  //   flowers: {
+  //     daisy: number
+  //     lily: number
+  //     rose: number
+  //     sunflower: number
+  //     tulip: number
+  //   }
+  // }[]
+
+  receivedGiftsWithNotes: {
     sender: string
     flowers: {
-      daisy: number
-      lily: number
-      rose: number
-      sunflower: number
-      tulip: number
+      daisy: { count: number; notes: string[] }
+      lily: { count: number; notes: string[] }
+      rose: { count: number; notes: string[] }
+      sunflower: { count: number; notes: string[] }
+      tulip: { count: number; notes: string[] }
     }
   }[]
 }
 
 export const db = client.db("main")
 
-export const usersCollection = db.collection<UserContext & DatabaseFields & { notificationToken?: string; lastLogged: Date }>(
-  "users",
-)
+export const usersCollection = db.collection<UserContext & DatabaseFields & { notificationToken?: string; lastLogged: Date }>("users")
 
 export const giftsCollection = db.collection<GiftsCollection & DatabaseFields>("gifts")

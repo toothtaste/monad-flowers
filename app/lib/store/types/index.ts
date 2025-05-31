@@ -16,6 +16,7 @@ export type StoreData = {
   flower: Flower
   receiver?: User
   follows: User[]
+  note: string
 
   updateStore: (newState: Partial<StoreData> | ((prev: StoreData) => Partial<StoreData>)) => void
 }

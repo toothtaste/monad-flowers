@@ -36,6 +36,8 @@ export async function POST(req: NextRequest) {
         tokens: notificationTokens?.slice(i, i + 100),
       })
 
+      if (successfulTokens?.length) console.log(successfulTokens)
+
       if (rateLimitedTokens?.length) console.log("rateLimitedTokens", rateLimitedTokens)
 
       if (invalidTokens?.length) {

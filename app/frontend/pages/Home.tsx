@@ -15,6 +15,7 @@ export default function Home() {
     updateStore({
       flower: Flower.Sunflower,
       receiver: undefined,
+      note: "",
     })
   }, [])
 

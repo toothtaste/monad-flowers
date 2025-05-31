@@ -45,10 +45,11 @@ const Receiver = () => {
   const { connectAsync, connectors } = useConnect()
 
   const { mutateAsync: giftMutateAsync } = useMutation({
-    mutationFn: async (flower: Flower) =>
+    mutationFn: async ({ flower, note }: { flower: Flower; note: string }) =>
       postGifts({
         receiverFid: receiver?.fid!,
         flower,
+        note,
       }),
   })
 
@@ -98,7 +99,10 @@ const Receiver = () => {
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck={false}
+                  value={search}
                   onChange={e => {
+                    const val = e.target.value
+                    if (val.length > 16) return
                     setSearch(e.target.value)
                   }}
                 />
@@ -176,7 +180,7 @@ const Receiver = () => {
         onClick={async () => {
           if (!receiver) return
 
-          const { flower } = store.getState()
+          const { flower, note } = store.getState()
 
           try {
             await connectAsync({ connector: connectors[0] })
@@ -194,7 +198,7 @@ const Receiver = () => {
             chain: monadTestnet,
           })
 
-          await giftMutateAsync(flower)
+          await giftMutateAsync({ flower, note })
 
           navigate(`/result`)
         }}

@@ -76,7 +76,7 @@ const Result = () => {
         </button>
       </div>
 
-      <Button to="/" text="back" />
+      <Button to="/" text="home" />
     </main>
   )
 }

@@ -13,13 +13,7 @@ const ImagesPreload = () => {
               -rotate-12
               animate-swing-fadeIn-r`}
       >
-        <Image
-          src="/images/roses.png"
-          fill
-          alt="roses"
-          sizes="(min-width: 429px) 108px, (min-width: 369px) 96px, 88px"
-          priority
-        />
+        <Image src="/images/roses.png" fill alt="roses" sizes="(min-width: 429px) 108px, (min-width: 369px) 96px, 88px" priority />
       </div>
       <div
         className={`fixed -left-8 min-[369px]:-left-11 top-82 min-[369px]:top-79 min-[429px]:top-78
@@ -29,13 +23,7 @@ const ImagesPreload = () => {
                      rotate-30
                      animate-swing-fadeIn-l`}
       >
-        <Image
-          src={"/images/violets.png"}
-          sizes="(min-width: 429px) 120px, (min-width: 369px) 112px, 96px"
-          priority
-          fill
-          alt="violets"
-        />
+        <Image src={"/images/violets.png"} sizes="(min-width: 429px) 120px, (min-width: 369px) 112px, 96px" priority fill alt="violets" />
       </div>
       <div
         className={`fixed -right-10 -bottom-10
@@ -50,6 +38,9 @@ const ImagesPreload = () => {
       {["rose", "daisy", "lily", "sunflower", "tulip"].map(f => (
         <Image key={f} src={`/images/flowers/${f}.png`} sizes="300px" fill priority alt={f} className="hidden" />
       ))}
+
+      <Image src={"/images/note-violet.svg"} width={12} height={12} sizes="16px" priority alt="note" className="hidden" />
+      <Image src={"/images/note.svg"} width={16} height={16} sizes="16px" priority alt="note" className="hidden" />
     </div>
   )
 }
