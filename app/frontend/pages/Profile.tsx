@@ -38,58 +38,63 @@ const Profile = () => {
         <div
           className={clsx(
             "flex flex-wrap justify-between",
-            "px-2 min-[390px]:px-4",
-            "pt-4",
+            "px-1 min-[390px]:px-3",
+            "pt-2",
             "h-60 min-[390px]:h-77",
             "overflow-y-scroll",
             "bg-white",
           )}
         >
           {data ? (
-            data?.receivedGiftsWithNotes.map((g, i) =>
-              Object.entries(g.flowers)
-                .filter(([_, { count }]) => count > 0)
-                .map(([flower, { count, notes }], j) => (
-                  <div
-                    key={`${g.sender}-${flower}-${count}-${i}-${j}`}
-                    className={clsx(
-                      "relative",
-                      "flex flex-col items-center justify-between basis-[47.5%]",
-                      "h-5/12 mb-2 min-[390px]:mb-4",
-                      "rounded-2xl",
-                      "border-2 border-[var(--accent)] bg-[var(--accent)]",
-                      "overflow-hidden",
-                    )}
-                  >
-                    <div className="relative h-full w-full py-2 bg-white">
-                      <div className="relative h-full mx-auto">
-                        <Image src={`/images/flowers/${flower}.png`} sizes="144px" fill priority alt={flower} />
+            data?.receivedGiftsWithNotes
+              ?.slice()
+              .reverse()
+              .map((g, i) =>
+                Object.entries(g.flowers)
+                  .filter(([_, { count }]) => count > 0)
+                  .map(([flower, { count, notes }], j) => (
+                    <div
+                      key={`${g.sender}-${flower}-${count}-${i}-${j}`}
+                      className={clsx(
+                        "relative",
+                        "flex flex-col items-center justify-between basis-[48.5%]",
+                        "h-5/12 mb-2 min-[390px]:mb-2.5",
+                        "rounded-2xl",
+                        "border-2 border-[var(--accent)] bg-[var(--accent)]",
+                        "overflow-hidden",
+                      )}
+                    >
+                      <div className="h-full w-full py-2 bg-white">
+                        <div className="relative h-full mx-auto">
+                          <Image src={`/images/flowers/${flower}.png`} sizes="144px" fill priority alt={flower} />
+                        </div>
+
+                        {!!notes?.length && (
+                          <div
+                            className={clsx(
+                              "absolute bottom-[21.5px] left-[6px]",
+                              "flex justify-center items-center",
+                              "aspect-[6/7] w-3 cursor-pointer",
+                            )}
+                            onClick={() => {
+                              setNotes({ author: g.sender, text: notes.slice().reverse() })
+                            }}
+                          >
+                            <Image src={"/images/note-violet.svg"} fill alt="note" />
+                          </div>
+                        )}
+
+                        <div className={clsx("text-black leading-none", "absolute bottom-5 right-1")}>{count}</div>
                       </div>
 
-                      {!!notes?.length && (
-                        <div
-                          className={clsx(
-                            "flex justify-center items-center",
-                            "w-[12px] h-[12px] cursor-pointer pointer-events-auto",
-                            "absolute bottom-[5px] left-[7px]",
-                          )}
-                          onClick={() => {
-                            setNotes({ author: g.sender, text: notes })
-                          }}
-                        >
-                          <Image src={"/images/note-violet.svg"} width={12} height={12} alt="note" className="pointer-events-auto" />
-                        </div>
-                      )}
-
-                      <div className={clsx("text-black leading-none", "absolute bottom-[3px] right-1.5")}>{count}</div>
+                      <div
+                        className={clsx("w-full", "text-center text-xs truncate overflow-hidden whitespace-nowrap", "px-1 pt-[1px] pb-1")}
+                      >
+                        {g.sender}
+                      </div>
                     </div>
-
-                    <div className={clsx("w-full", "text-center text-xs truncate overflow-hidden whitespace-nowrap", "px-1 pt-[1px] pb-1")}>
-                      @{g.sender}
-                    </div>
-                  </div>
-                )),
-            )
+                  )),
+              )
           ) : isLoading ? (
             Array.from({ length: 9 }).map((_, i) => (
               <div
@@ -143,7 +148,6 @@ const Profile = () => {
                       "px-3 py-1.5",
                       "border-b border-b-[var(--accent)]",
                       "overflow-hidden",
-                      "last:border-b-[var(--dark-accent)]",
                     )}
                   >
                     {note}
@@ -152,7 +156,7 @@ const Profile = () => {
             </div>
 
             <div
-              className="absolute bottom-0 inset-x-0 bg-[var(--accent)] py-0.5 text-center cursor-pointer"
+              className="absolute bottom-0 inset-x-0 bg-[var(--accent)] py-[3px] text-center cursor-pointer"
               onClick={() => {
                 setNotes({ text: [] })
               }}

@@ -53,13 +53,9 @@ const Flowers = () => {
         </div>
 
         <div className={clsx("relative w-full", "text-white")}>
-          <Image
-            src={"/images/note.svg"}
-            width={16}
-            height={16}
-            alt="note"
-            className={clsx("absolute left-4 top-[calc(50%)] -translate-y-1/2")}
-          />
+          <div className={clsx("absolute left-4 top-[calc(50%)] -translate-y-1/2 aspect-[6/7] w-4")}>
+            <Image src={"/images/note.svg"} fill alt="note" />
+          </div>
           <input
             type="text"
             name="note"
@@ -67,7 +63,7 @@ const Flowers = () => {
             placeholder="optional note"
             role="note"
             className={clsx(
-              "pt-1 pb-1.5 pl-10 pr-3",
+              "pt-1.5 pb-2 pl-10 pr-3",
               "w-full",
               "border-t border-t-[var(--dark-accent)]",
               "outline-0",

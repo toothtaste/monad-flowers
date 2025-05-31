@@ -144,7 +144,7 @@ const Receiver = () => {
                             onError={e => {
                               e.currentTarget.src = "/images/user.svg"
                             }}
-                            className="object-cover w-full h-full rounded-full mt-[1px]"
+                            className="object-cover w-full h-full rounded-full"
                           />
                         </Suspense>
                       </div>
@@ -152,13 +152,13 @@ const Receiver = () => {
                     </div>
 
                     <div
-                      className={clsx("w-4 h-4")}
+                      className={clsx("relative aspect-square w-4")}
                       onClick={e => {
                         e.stopPropagation()
                         sdk.actions.viewProfile({ fid: user.fid })
                       }}
                     >
-                      <Image src={`/images/farcaster.svg`} alt="farcaster" width={16} height={16} />
+                      <Image src={`/images/farcaster.svg`} fill alt="farcaster" />
                     </div>
                   </div>
                 ))}
