@@ -51,7 +51,7 @@ const Profile = () => {
                 .filter(([_, { count }]) => count > 0)
                 .map(([flower, { count, notes }], j) => (
                   <div
-                    key={`${g.sender}-${flower}-${count}-${j}`}
+                    key={`${g.sender}-${flower}-${count}-${i}-${j}`}
                     className={clsx(
                       "relative",
                       "flex flex-col items-center justify-between basis-[47.5%]",
